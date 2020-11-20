@@ -40,7 +40,7 @@ function Home() {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Center>
         <Image source={logoIcon} style={styles.logoIcon} />
       </Center>
