@@ -9,7 +9,7 @@ const Center = ({ children }) => {
 export default Center;
 
 Center.propTypes = {
-  children: React.Children,
+  children: () => {},
 };
 
 Center.defaultProps = {
