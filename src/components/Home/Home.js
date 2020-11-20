@@ -48,7 +48,7 @@ function Home() {
         <FlatList
           style={styles.flatList}
           data={movies}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           renderItem={renderItem}
           onEndReached={fetchMore}
           onEndReachedThreshold={0.9}
