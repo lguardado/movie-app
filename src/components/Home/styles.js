@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   logoIcon: {
-    marginTop: 40,
+    marginTop: 50,
   },
 });
 
