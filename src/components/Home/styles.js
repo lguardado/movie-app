@@ -15,10 +15,15 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     paddingVertical: 20,
     marginVertical: 10,
+    marginTop: 50,
+  },
+  movieCard: {
+    height: 200,
+    margin: 5,
   },
   logoIcon: {
     marginTop: 40,
-  }
+  },
 });
 
 export default styles;

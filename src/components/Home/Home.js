@@ -1,40 +1,25 @@
 import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Image, FlatList } from 'react-native';
+import useFetchMovies from '../../hooks/useFetchMovies';
 import Center from '../Center';
-import { fetchMovies, getConfiguration } from '../../helpers/MoviesHelper';
+import { getConfiguration } from '../../helpers/MoviesHelper';
 
 import logoIcon from 'assets/ic_logo/ic_logo.png';
 import styles from 'components/Home/styles';
-import strings from 'localization';
-import { getUser } from 'selectors/UserSelectors';
 
 function Home() {
   const { colors } = useTheme();
-  const user = useSelector(getUser);
-  const [movies, setMovies] = useState([]);
   const [urlPrefix, setUrlPrefix] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [movies, fetchMore] = useFetchMovies();
 
   useEffect(() => {
     setIsLoading(true);
-    let response;
-    const fetch = async () => {
-      response = await fetchMovies();
-      setMovies(response.results);
-    };
-    fetch();
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    setIsLoading(true);
-    let response;
     const fetchCfg = async () => {
-      response = await getConfiguration();
+      const response = await getConfiguration();
       setUrlPrefix(
-        response.images.base_url + response.images.backdrop_sizes[3]
+        response.images.base_url + response.images.backdrop_sizes[1]
       );
     };
     fetchCfg();
@@ -48,22 +33,25 @@ function Home() {
         source={{
           uri,
         }}
-        style={{ height: 200 }}
+        style={styles.movieCard}
         resizeMode="cover"
       />
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <Center>
-        <Image source={logoIcon} style={styles.logoIcon}/>
+        <Image source={logoIcon} style={styles.logoIcon} />
       </Center>
       {!isLoading && (
         <FlatList
           style={styles.flatList}
           data={movies}
+          keyExtractor={item => item.id}
           renderItem={renderItem}
+          onEndReached={fetchMore}
+          onEndReachedThreshold={0.9}
         />
       )}
     </View>
