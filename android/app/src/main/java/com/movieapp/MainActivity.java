@@ -1,4 +1,4 @@
-package com.rntemplate;
+package com.movieapp;
 
 import android.os.Bundle;
 
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "rntemplate";
+        return "movieapp";
     }
 
     @Override
