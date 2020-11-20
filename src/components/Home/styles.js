@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   movieCard: {
-    height: 200,
+    height: 600,
+    width: undefined,
     margin: 5,
   },
   logoIcon: {
