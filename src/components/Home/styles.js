@@ -6,12 +6,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: '10%',
+  imegePreview: {
+    width: 50,
+    height: 50,
   },
+  flatList: {
+    flexGrow: 1,
+    borderColor: 'black',
+    paddingVertical: 20,
+    marginVertical: 10,
+  },
+  logoIcon: {
+    marginTop: 40,
+  }
 });
 
 export default styles;
