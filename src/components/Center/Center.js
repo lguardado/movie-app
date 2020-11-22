@@ -10,7 +10,7 @@ const Center = ({ children }) => {
 export default Center;
 
 Center.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.object,
 };
 
 Center.defaultProps = {

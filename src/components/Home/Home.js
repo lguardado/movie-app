@@ -7,6 +7,7 @@ import { getConfiguration } from '../../helpers/MoviesHelper';
 
 import logoIcon from 'assets/ic_logo/ic_logo.png';
 import styles from 'components/Home/styles';
+import MoviesListItem from 'components/MoviesListItem';
 
 function Home() {
   const { colors } = useTheme();
@@ -26,19 +27,6 @@ function Home() {
     setIsLoading(false);
   }, []);
 
-  const renderItem = ({ item }) => {
-    const uri = urlPrefix + item.poster_path;
-    return (
-      <Image
-        source={{
-          uri,
-        }}
-        style={styles.movieCard}
-        resizeMode="cover"
-      />
-    );
-  };
-
   return (
     <View style={styles.container}>
       <Center>
@@ -49,7 +37,9 @@ function Home() {
           style={styles.flatList}
           data={movies}
           keyExtractor={item => item.id.toString()}
-          renderItem={renderItem}
+          renderItem={({ item }) => (
+            <MoviesListItem uri={urlPrefix + item.poster_path} />
+          )}
           onEndReached={fetchMore}
           onEndReachedThreshold={0.9}
         />
