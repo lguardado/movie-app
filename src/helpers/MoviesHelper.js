@@ -1,7 +1,6 @@
 import Config from 'react-native-config';
 import axios from './Axios';
 
-// todo move this to env variables when fixed issue reading process.env
 const { API_KEY } = Config;
 
 async function get(url) {
