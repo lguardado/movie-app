@@ -4,9 +4,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
   },
-  loading: { backgroundColor: 'black' },
+  loading: {
+    backgroundColor: 'black',
+    flex: 1,
+  },
   flatList: {
-    flexGrow: 1,
     borderColor: 'black',
     paddingVertical: 20,
     marginVertical: 10,

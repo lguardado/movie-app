@@ -27,29 +27,29 @@ function Home() {
 
   return (
     <>
-      {(isFetchingMovies || isLoading) && (
+      {isLoading && (
         <Center style={styles.loading}>
-          <ActivityIndicator />
+          <ActivityIndicator size="large" />
         </Center>
       )}
-      {!(isFetchingMovies || isLoading) && (
-        <View style={styles.container}>
-          <Center>
-            <Image source={logoIcon} style={styles.logoIcon} />
-          </Center>
-
+      <View style={styles.container}>
+        <Center>
+          <Image source={logoIcon} style={styles.logoIcon} />
+        </Center>
+        {!isLoading && (
           <FlatList
             style={styles.flatList}
             data={movies}
             keyExtractor={item => item.id.toString()}
+            refreshing={isFetchingMovies}
             renderItem={({ item }) => (
               <MoviesListItem uri={urlPrefix + item.poster_path} />
             )}
             onEndReached={fetchMore}
             onEndReachedThreshold={0.9}
           />
-        </View>
-      )}
+        )}
+      </View>
     </>
   );
 }
