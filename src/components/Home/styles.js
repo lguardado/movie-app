@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
   },
+  loading: { backgroundColor: 'black' },
   flatList: {
     flexGrow: 1,
     borderColor: 'black',
