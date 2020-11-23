@@ -16,7 +16,16 @@ const useFetchMovies = () => {
     const res = await fetchMovies(page);
     const newMovies = res.results;
     setShouldFetch(false);
-    setMovies(prevMovies => [...new Set([...prevMovies, ...newMovies])]);
+    setMovies(prevMovies => {
+      const newArray = [...prevMovies];
+      // Verifying the items in the new array are not existing before ading them
+      newMovies.forEach(element => {
+        if (!prevMovies.includes(el => el.id === element.id)) {
+          newArray.push(element);
+        }
+      });
+      return newArray;
+    });
     setPage(page + 1);
     setIsFetching(false);
   }, [page, shouldFetch]);
