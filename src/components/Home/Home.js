@@ -1,4 +1,3 @@
-import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Image, FlatList } from 'react-native';
 import useFetchMovies from '../../hooks/useFetchMovies';
@@ -10,7 +9,6 @@ import styles from 'components/Home/styles';
 import MoviesListItem from 'components/MoviesListItem';
 
 function Home() {
-  const { colors } = useTheme();
   const [urlPrefix, setUrlPrefix] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [movies, fetchMore] = useFetchMovies();
