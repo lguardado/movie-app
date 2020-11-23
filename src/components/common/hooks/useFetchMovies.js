@@ -8,24 +8,22 @@ const useFetchMovies = () => {
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchMore = useCallback(() => setShouldFetch(true), []);
-
-  useEffect(() => {
+  const fetchConfig = useCallback(async () => {
     if (!shouldFetch) {
       return;
     }
-
-    const fetch = async () => {
-      setIsFetching(true);
-      const res = await fetchMovies(page);
-      const newMovies = res.results;
-      setShouldFetch(false);
-      setMovies(prevMovies => [...prevMovies, ...newMovies]);
-      setPage(page + 1);
-      setIsFetching(false);
-    };
-
-    fetch();
+    setIsFetching(true);
+    const res = await fetchMovies(page);
+    const newMovies = res.results;
+    setShouldFetch(false);
+    setMovies(prevMovies => [...new Set([...prevMovies, ...newMovies])]);
+    setPage(page + 1);
+    setIsFetching(false);
   }, [page, shouldFetch]);
+
+  useEffect(() => {
+    fetchConfig();
+  }, [fetchConfig]);
 
   return [movies, fetchMore, isFetching];
 };
