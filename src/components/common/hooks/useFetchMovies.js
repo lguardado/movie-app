@@ -9,29 +9,34 @@ const useFetchMovies = () => {
   const [error, setError] = useState(null);
 
   const fetchMore = useCallback(() => setShouldFetch(true), []);
-  const fetchConfig = useCallback(async () => {
-    if (!shouldFetch) {
-      return;
-    }
-    setIsFetching(true);
-    const res = await fetchMovies(page).catch(err => {
-      setError(err);
-      setIsFetching(false);
-    });
-    const newMovies = res.results;
-    setShouldFetch(false);
+
+  const addNewMovies = moviesToAdd => {
     setMovies(prevMovies => {
       const newArray = [...prevMovies];
       // Verifying the items in the new array are not existing before ading them
-      newMovies.forEach(element => {
+      moviesToAdd.forEach(element => {
         if (!prevMovies.includes(el => el.id === element.id)) {
           newArray.push(element);
         }
       });
       return newArray;
     });
+  };
+
+  const fetchConfig = useCallback(async () => {
+    if (!shouldFetch) {
+      return;
+    }
+    setIsFetching(true);
+    const res = await fetchMovies(page)
+      .catch(err => {
+        setError(err);
+      })
+      .finally(() => setIsFetching(false));
+
+    setShouldFetch(false);
+    addNewMovies(res.results);
     setPage(page + 1);
-    setIsFetching(false);
   }, [page, shouldFetch]);
 
   useEffect(() => {

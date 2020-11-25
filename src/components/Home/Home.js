@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Image, Text, ActivityIndicator } from 'react-native';
 import useFetchMovies from 'components/common/hooks/useFetchMovies';
 import Center from 'components/Center';
@@ -19,17 +19,16 @@ function Home() {
     errorFetchingMovies,
   } = useFetchMovies();
 
+  const fetchCfg = useCallback(async () => {
+    const response = await getConfiguration();
+    setUrlPrefix(response.images.base_url + response.images.backdrop_sizes[1]);
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     setIsLoading(true);
-    const fetchCfg = async () => {
-      const response = await getConfiguration();
-      setUrlPrefix(
-        response.images.base_url + response.images.backdrop_sizes[1]
-      );
-      setIsLoading(false);
-    };
     fetchCfg();
-  }, []);
+  }, [fetchCfg]);
 
   return !errorFetchingMovies ? (
     <>
