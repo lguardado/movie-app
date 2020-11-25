@@ -6,13 +6,16 @@ import styles from 'components/MoviesListItem/styles';
 
 const MoviesListItem = ({ uri }) => {
   return (
-    <Image
-      source={{
-        uri,
-      }}
-      style={styles.item}
-      resizeMode="contain"
-    />
+    uri && (
+      <Image
+        testID="movieImage"
+        source={{
+          uri,
+        }}
+        style={styles.item}
+        resizeMode="contain"
+      />
+    )
   );
 };
 

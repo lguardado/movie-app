@@ -6,6 +6,7 @@ const useFetchMovies = () => {
   const [shouldFetch, setShouldFetch] = useState(true);
   const [movies, setMovies] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchMore = useCallback(() => setShouldFetch(true), []);
   const fetchConfig = useCallback(async () => {
@@ -13,7 +14,10 @@ const useFetchMovies = () => {
       return;
     }
     setIsFetching(true);
-    const res = await fetchMovies(page);
+    const res = await fetchMovies(page).catch(err => {
+      setError(err);
+      setIsFetching(false);
+    });
     const newMovies = res.results;
     setShouldFetch(false);
     setMovies(prevMovies => {
@@ -34,7 +38,7 @@ const useFetchMovies = () => {
     fetchConfig();
   }, [fetchConfig]);
 
-  return [movies, fetchMore, isFetching];
+  return { movies, fetchMore, isFetching, error };
 };
 
 export default useFetchMovies;

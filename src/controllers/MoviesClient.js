@@ -28,7 +28,9 @@ async function getPaginated(url, page = '') {
 }
 
 export const fetchMovies = async (page = 1) => {
-  return getPaginated('/movie/popular', page);
+  return getPaginated('/movie/popular', page).catch(err => {
+    throw new Error(err.message);
+  });
 };
 
 export const getConfiguration = async () => {

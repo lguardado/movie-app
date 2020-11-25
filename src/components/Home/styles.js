@@ -8,14 +8,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     flex: 1,
   },
-  flatList: {
-    borderColor: 'black',
-    paddingVertical: 20,
-    marginVertical: 10,
-    marginTop: 50,
-  },
   logoIcon: {
     marginTop: 50,
+  },
+  error: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  errorText: {
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
