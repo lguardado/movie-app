@@ -10,23 +10,21 @@ const MoviesList = ({ movies, urlPrefix, isFetchingMovies, fetchMore }) => {
   const renderItem = ({ item }) => (
     <MoviesListItem uri={urlPrefix + item.poster_path} />
   );
-  return (
-    movies.length && (
-      <View>
-        <FlatList
-          testID="moviesflatList"
-          style={styles.flatList}
-          data={movies}
-          keyExtractor={item => item.id.toString()}
-          refreshing={isFetchingMovies}
-          ListFooterComponent={renderFooter}
-          renderItem={renderItem}
-          onEndReached={fetchMore}
-          onEndReachedThreshold={0.9}
-        />
-      </View>
-    )
-  );
+  return movies && movies.length ? (
+    <View>
+      <FlatList
+        testID="moviesflatList"
+        style={styles.flatList}
+        data={movies}
+        keyExtractor={item => item.id.toString()}
+        refreshing={isFetchingMovies}
+        ListFooterComponent={renderFooter}
+        renderItem={renderItem}
+        onEndReached={fetchMore}
+        onEndReachedThreshold={0.9}
+      />
+    </View>
+  ) : null;
 };
 
 export default MoviesList;
