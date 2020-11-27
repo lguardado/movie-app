@@ -1,7 +1,6 @@
-import { render } from '@testing-library/react-native';
+import { cleanup, render } from '@testing-library/react-native';
 import React from 'react';
 import MoviesList from 'components/MoviesList';
-import useFetchMovies from 'components/common/hooks/useFetchMovies';
 
 const mockMovies = [
   { id: 'foo', poster_path: 'path' },
@@ -10,15 +9,16 @@ const mockMovies = [
 
 jest.mock('components/common/hooks/useFetchMovies');
 
+afterEach(cleanup);
+
 describe('Movies List', () => {
-  useFetchMovies.mockReturnValue({
+  const props = {
     movies: mockMovies,
     fetchMore: jest.fn(),
     isFetching: false,
     error: null,
-  });
+  };
 
-  const props = useFetchMovies();
   test('it renders the movies list correctly', () => {
     const { queryByTestId } = render(<MoviesList {...props} />);
     const el = queryByTestId('moviesflatList');

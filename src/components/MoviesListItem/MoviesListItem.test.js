@@ -3,7 +3,7 @@ import { render, cleanup } from '@testing-library/react-native';
 import MoviesListItem from 'components/MoviesListItem';
 
 describe('MoviesListItem', () => {
-  beforeEach(cleanup);
+  afterEach(cleanup);
 
   test('renders the <MoviesListItem /> correctly with a passed uri', () => {
     const uri = 'https://fakeUri.com';

@@ -4,7 +4,7 @@ import { fetchMovies } from 'controllers/MoviesClient';
 
 jest.mock('controllers/MoviesClient');
 
-beforeEach(cleanup);
+afterEach(cleanup);
 
 test('custom hook initial state', () => {
   const { result } = renderHook(() => useFetchMovies());
