@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 20,
-    color: 'white',
+    color: Colors.white,
     textAlign: 'center',
   },
 });

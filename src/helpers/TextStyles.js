@@ -9,9 +9,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'normal',
   },
+  textMedium: {
+    fontSize: 20,
+    fontWeight: 'normal',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
   fieldTitle: {
     fontSize: 16,
     fontWeight: '700',
+  },
+  alignCenter: {
+    textAlign: 'center',
+    alignSelf: 'center',
   },
   error: {
     fontSize: 14,

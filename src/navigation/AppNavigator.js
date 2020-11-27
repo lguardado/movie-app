@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,15 +8,54 @@ import TabBarIcon from 'components/common/TabBarIcon';
 import Home from 'components/Home';
 import Profile from 'components/Profile';
 import navigationConstants from 'constants/navigation';
+import Details from 'components/Details';
+import Colors from 'constants/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const { home, profile } = navigationConstants;
+const { home, profile, details } = navigationConstants;
 
 function HomeNavigator() {
+  const androidHeaderStyle = {
+    alignSelf: 'center',
+  };
+  const headerLeftContainerStyle =
+    Platform.OS === 'ios'
+      ? {
+          width: 80,
+          height: 40,
+          opacity: 0.5,
+          backgroundColor: Colors.black,
+        }
+      : null;
+  const headerTitleStyle =
+    Platform.OS === 'ios'
+      ? {
+          color: Colors.white,
+          backgroundColor: Colors.black,
+          opacity: 0.5,
+        }
+      : androidHeaderStyle;
+
+  const headerOptions = {
+    title: 'Movie details',
+    headerBackTitle: 'back',
+    headerLeftContainerStyle,
+    headerTransparent: true,
+    headerTitleStyle,
+  };
   return (
     <Stack.Navigator>
-      <Stack.Screen name={home} component={Home} />
+      <Stack.Screen
+        name={home}
+        component={Home}
+        options={{ headerTitleStyle: androidHeaderStyle }}
+      />
+      <Stack.Screen
+        name={details}
+        component={Details}
+        options={headerOptions}
+      />
     </Stack.Navigator>
   );
 }

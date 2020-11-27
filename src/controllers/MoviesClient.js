@@ -33,6 +33,12 @@ export const fetchMovies = async (page = 1) => {
   });
 };
 
-export const getConfiguration = async () => {
+export const fetchGenres = async () => {
+  return get('/genre/movie/list').catch(err => {
+    throw new Error(err.message);
+  });
+};
+
+export const fetchConfiguration = async () => {
   return get('/configuration');
 };

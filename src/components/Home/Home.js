@@ -1,16 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Image, Text, ActivityIndicator } from 'react-native';
+import { PropTypes } from 'prop-types';
+
 import useFetchMovies from 'components/common/hooks/useFetchMovies';
 import Center from 'components/Center';
-import { getConfiguration } from 'controllers/MoviesClient';
 import strings from 'localization';
 import logoIcon from 'assets/ic_logo/ic_logo.png';
 import styles from 'components/Home/styles';
 import MoviesList from 'components/MoviesList';
+import useFetchPrefixUrl from 'components/common/hooks/usePrefixUrl';
+import { fetchGenres } from 'controllers/MoviesClient';
 
-function Home() {
-  const [urlPrefix, setUrlPrefix] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+function Home({ navigation }) {
+  const [isFetching, prefixUrl] = useFetchPrefixUrl();
+  const [genres, setGenres] = useState([]);
 
   const {
     movies,
@@ -19,20 +22,34 @@ function Home() {
     errorFetchingMovies,
   } = useFetchMovies();
 
-  const fetchCfg = useCallback(async () => {
-    const response = await getConfiguration();
-    setUrlPrefix(response.images.base_url + response.images.backdrop_sizes[1]);
-    setIsLoading(false);
-  }, []);
+  const getGenres = ids => {
+    return ids.map(id => {
+      const foundGenre = genres.find(genre => genre.id === id);
+      return foundGenre ? foundGenre.name : null;
+    });
+  };
+
+  const handleMoviePress = currentItem => {
+    const movieGenres = getGenres(currentItem.genre_ids);
+    navigation.navigate('Details', {
+      movie: currentItem,
+      prefixUrl,
+      genres: movieGenres,
+    });
+  };
+
+  const fetchGenresCallback = useCallback(async () => {
+    const res = await fetchGenres();
+    setGenres(res.genres);
+  }, [setGenres]);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchCfg();
-  }, [fetchCfg]);
+    fetchGenresCallback();
+  }, [fetchGenresCallback]);
 
   return !errorFetchingMovies ? (
     <>
-      {(isLoading || isFetchingMovies) && (
+      {(isFetching || isFetchingMovies) && (
         <Center testID="loading" style={styles.loading}>
           <ActivityIndicator size="large" />
         </Center>
@@ -41,12 +58,13 @@ function Home() {
         <Center>
           <Image source={logoIcon} style={styles.logoIcon} />
         </Center>
-        {!isLoading && (
+        {!isFetching && (
           <MoviesList
             movies={movies}
-            urlPrefix={urlPrefix}
+            urlPrefix={prefixUrl}
             isFetchingMovies={isFetchingMovies}
             fetchMore={fetchMore}
+            handleMoviePress={handleMoviePress}
           />
         )}
       </View>
@@ -59,3 +77,11 @@ function Home() {
   );
 }
 export default Home;
+
+Home.propTypes = {
+  navigation: PropTypes.object,
+};
+
+Home.defaultProps = {
+  navigation: {},
+};
