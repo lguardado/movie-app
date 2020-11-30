@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     flexWrap: 'wrap',
     // todo: remove this when enabling themes
-    color: 'coral',
+    color: Colors.coral,
   },
 });
 
