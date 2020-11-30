@@ -12,10 +12,10 @@ const useFetchMovies = () => {
 
   const addNewMovies = moviesToAdd => {
     setMovies(prevMovies => {
-      const newArray = [...prevMovies];
+      const newArray = prevMovies ? [...prevMovies] : [];
       // Verifying the items in the new array are not existing before ading them
       moviesToAdd.forEach(element => {
-        if (!prevMovies.includes(el => el.id === element.id)) {
+        if (!prevMovies.find(el => el.id === element.id)) {
           newArray.push(element);
         }
       });
