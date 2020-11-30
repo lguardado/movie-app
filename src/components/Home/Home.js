@@ -1,36 +1,60 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { View, Image, Text, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image, ActivityIndicator } from 'react-native';
 import { PropTypes } from 'prop-types';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
-import useFetchMovies from 'components/common/hooks/useFetchMovies';
+import ErrorView from 'components/common/ErrorView';
+import errorsSelector from 'selectors/ErrorSelectors';
+import { isLoadingSelector } from 'selectors/StatusSelectors';
+import { getMovies, getPage, getPrefixUrl } from 'selectors/MoviesSelectors';
+import {
+  actionTypes,
+  fetchMovies,
+  fetchPrefix,
+  fetchGenres,
+} from 'actions/MoviesActions';
+import navigationConstants from 'constants/navigation';
 import Center from 'components/Center';
-import strings from 'localization';
 import logoIcon from 'assets/ic_logo/ic_logo.png';
 import styles from 'components/Home/styles';
 import MoviesList from 'components/MoviesList';
-import useFetchPrefixUrl from 'components/common/hooks/usePrefixUrl';
-import navigationConstants from 'constants/navigation';
 
 function Home({ navigation }) {
-  const [isFetching, prefixUrl] = useFetchPrefixUrl();
+  const dispatch = useDispatch();
 
-  const {
-    movies,
-    fetchMore,
-    isFetchingMovies,
-    errorFetchingMovies,
-  } = useFetchMovies();
+  const isLoading = useSelector(
+    state => isLoadingSelector([actionTypes.MOVIES], state),
+    shallowEqual
+  );
+
+  const errors = useSelector(
+    state => errorsSelector([actionTypes.MOVIES], state),
+    shallowEqual
+  );
+
+  const prefixUrl = useSelector(state => getPrefixUrl(state));
+  const movies = useSelector(state => getMovies(state));
+  const currentPage = useSelector(state => getPage(state));
 
   const handleMoviePress = currentItem => {
     navigation.navigate(navigationConstants.details, {
       movie: currentItem,
-      prefixUrl,
     });
   };
 
-  return !errorFetchingMovies ? (
+  const fetchMore = () => {
+    dispatch(fetchMovies(currentPage));
+  };
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+    dispatch(fetchPrefix());
+    dispatch(fetchGenres());
+  }, [dispatch]);
+
+  return (
     <>
-      {(isFetching || isFetchingMovies) && (
+      {isLoading && (
         <Center testID="loading" style={styles.loading}>
           <ActivityIndicator size="large" />
         </Center>
@@ -39,24 +63,19 @@ function Home({ navigation }) {
         <Center>
           <Image source={logoIcon} style={styles.logoIcon} />
         </Center>
-        {!isFetching && (
-          <MoviesList
-            movies={movies}
-            urlPrefix={prefixUrl}
-            isFetchingMovies={isFetchingMovies}
-            fetchMore={fetchMore}
-            handleMoviePress={handleMoviePress}
-          />
-        )}
+        <MoviesList
+          movies={movies}
+          urlPrefix={prefixUrl}
+          isFetchingMovies={isLoading}
+          fetchMore={fetchMore}
+          handleMoviePress={handleMoviePress}
+        />
       </View>
+      <ErrorView errors={errors} />
     </>
-  ) : (
-    <View testID="error" style={styles.error}>
-      <Text style={styles.errorText}>{strings.errorFetching}</Text>
-      <Text style={styles.errorText}>{errorFetchingMovies}</Text>
-    </View>
   );
 }
+
 export default Home;
 
 Home.propTypes = {

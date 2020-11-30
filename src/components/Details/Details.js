@@ -1,19 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
+import { PropTypes } from 'prop-types';
+import { useSelector } from 'react-redux';
 import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { PropTypes } from 'prop-types';
 
 import styles from './styles';
-import { fetchGenres } from 'controllers/MoviesClient';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
+import { getGenres, getPrefixUrl } from 'selectors/MoviesSelectors';
 
 const Details = ({ route }) => {
-  const [genres, setGenres] = useState([]);
-  const [isFetchingGenres, setIsFetchingGenres] = useState(false);
   const { colors } = useTheme();
   const {
-    prefixUrl,
     movie: {
       backdrop_path: backdropPath,
       poster_path: posterPath,
@@ -26,28 +24,17 @@ const Details = ({ route }) => {
     },
   } = route.params;
 
-  const getGenresNames = useCallback((ids, resGenres) => {
-    return ids && resGenres
-      ? ids.map(id => {
-          const foundGenre = resGenres.find(genre => genre.id === id);
-          return foundGenre ? foundGenre.name : null;
-        })
-      : [];
-  }, []);
-
-  const fetchGenresCallback = useCallback(async () => {
-    setIsFetchingGenres(true);
-    const res = await fetchGenres();
-    const genresNames = getGenresNames(genreIds, res.genres);
-    setGenres(genresNames);
-    setIsFetchingGenres(false);
-  }, [setGenres, getGenresNames, genreIds]);
-
-  useEffect(() => {
-    fetchGenresCallback();
-  }, [fetchGenresCallback]);
+  const prefixUrl = useSelector(state => getPrefixUrl(state));
+  const genres = useSelector(state => getGenres(state));
   const uri = prefixUrl + backdropPath;
   const thumbUri = prefixUrl + posterPath;
+
+  const getGenresNames = ids => {
+    return ids.map(id => {
+      const foundGenre = genres.find(genre => genre.id === id);
+      return foundGenre ? foundGenre.name : null;
+    });
+  };
 
   return (
     <ScrollView testID="detail-scroll-view">
@@ -85,8 +72,7 @@ const Details = ({ route }) => {
           releaseDate={releaseDate}
           voteAverage={voteAverage}
           overview={overview}
-          genres={genres}
-          isFetchingGenres={isFetchingGenres}
+          genres={getGenresNames(genreIds)}
         />
       </View>
     </ScrollView>
