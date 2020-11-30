@@ -1,26 +1,61 @@
-import { useTheme } from '@react-navigation/native';
-import React from 'react';
-import { Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import styles from 'components/Home/styles';
-import TextStyles from 'helpers/TextStyles';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Image, Text, ActivityIndicator } from 'react-native';
+import useFetchMovies from 'components/common/hooks/useFetchMovies';
+import Center from 'components/Center';
+import { getConfiguration } from 'controllers/MoviesClient';
 import strings from 'localization';
-import { getUser } from 'selectors/UserSelectors';
+import logoIcon from 'assets/ic_logo/ic_logo.png';
+import styles from 'components/Home/styles';
+import MoviesList from 'components/MoviesList';
 
 function Home() {
-  const { colors } = useTheme();
-  const user = useSelector(getUser);
+  const [urlPrefix, setUrlPrefix] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  return (
-    <View style={styles.container}>
-      <Text style={[TextStyles.lightTitle, { color: colors.text }]}>
-        {strings.home}
-      </Text>
-      <Text style={{ color: colors.text }}>
-        {strings.homeMessage} {user?.name}
-      </Text>
+  const {
+    movies,
+    fetchMore,
+    isFetchingMovies,
+    errorFetchingMovies,
+  } = useFetchMovies();
+
+  const fetchCfg = useCallback(async () => {
+    const response = await getConfiguration();
+    setUrlPrefix(response.images.base_url + response.images.backdrop_sizes[1]);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchCfg();
+  }, [fetchCfg]);
+
+  return !errorFetchingMovies ? (
+    <>
+      {(isLoading || isFetchingMovies) && (
+        <Center testID="loading" style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </Center>
+      )}
+      <View testID="moviesContainer" style={styles.container}>
+        <Center>
+          <Image source={logoIcon} style={styles.logoIcon} />
+        </Center>
+        {!isLoading && (
+          <MoviesList
+            movies={movies}
+            urlPrefix={urlPrefix}
+            isFetchingMovies={isFetchingMovies}
+            fetchMore={fetchMore}
+          />
+        )}
+      </View>
+    </>
+  ) : (
+    <View testID="error" style={styles.error}>
+      <Text style={styles.errorText}>{strings.errorFetching}</Text>
+      <Text style={styles.errorText}>{errorFetchingMovies}</Text>
     </View>
   );
 }
-
 export default Home;
