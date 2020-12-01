@@ -1,6 +1,9 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react-native';
 import Details from 'components/Details';
+import { fetchGenres } from 'controllers/MoviesClient';
+
+jest.mock('controllers/MoviesClient');
 
 const fakeRoute = {
   params: {
@@ -13,8 +16,8 @@ const fakeRoute = {
       release_date: '10/10/2020',
       vote_average: 8,
       overview: 'This is a great mocked movie',
+      genre_ids: [1, 2],
     },
-    genres: ['mockGenre1, mockGenre2'],
   },
 };
 
@@ -29,6 +32,15 @@ const fakeRouteWithSameTitle = {
   },
 };
 
+fetchGenres.mockResolvedValue(
+  Promise.resolve({
+    genres: [
+      { id: 1, name: 'mockGenre1' },
+      { id: 2, name: 'mockGenre2' },
+    ],
+  })
+);
+
 const renderDetails = props => {
   return render(<Details {...props} />);
 };
@@ -40,29 +52,31 @@ describe('Details', () => {
     render(<Details route={fakeRoute} />);
   });
 
-  test("it doesn't render the original title when it's the same as the title", () => {
-    const { queryByText } = renderDetails({ route: fakeRouteWithSameTitle });
-    const movieTitle = queryByText(/Fake Movie/);
+  test("it doesn't render the original title when it's the same as the title", async () => {
+    const { findByText } = renderDetails({
+      route: fakeRouteWithSameTitle,
+    });
+    const movieTitle = await findByText(/Fake Movie/);
     expect(movieTitle.props.children).toContain('Fake Movie');
     expect(movieTitle.props.children).not.toContain('(');
   });
 
-  test('it renders the title and the original title', () => {
-    const { queryByText } = renderDetails({ route: fakeRoute });
-    const movieTitle = queryByText(/Fake Movie/);
+  test('it renders the title and the original title', async () => {
+    const { findByText } = renderDetails({ route: fakeRoute });
+    const movieTitle = await findByText(/Fake Movie/);
     expect(movieTitle.props.children).toContain('Fake Movie');
     expect(movieTitle.props.children).toContain('(Mocked movie)');
   });
 
-  test('renders an image background', () => {
-    const { queryByTestId } = renderDetails({ route: fakeRoute });
-    const imageBackground = queryByTestId('image-background');
+  test('renders an image background', async () => {
+    const { findByTestId } = renderDetails({ route: fakeRoute });
+    const imageBackground = await findByTestId('image-background');
     expect(imageBackground).toBeTruthy();
   });
 
-  test('<Details /> matches inline snapshot', () => {
-    const { queryByTestId } = renderDetails({ route: fakeRoute });
-    const el = queryByTestId('detail-scroll-view');
+  test('<Details /> matches inline snapshot', async () => {
+    const { findByTestId } = renderDetails({ route: fakeRoute });
+    const el = await findByTestId('detail-scroll-view');
     expect(el).toBeDefined();
     expect(el.props).toMatchInlineSnapshot(`
       Object {
@@ -152,7 +166,8 @@ describe('Details', () => {
               <MovieInfo
                 genres={
                   Array [
-                    "mockGenre1, mockGenre2",
+                    "mockGenre1",
+                    "mockGenre2",
                   ]
                 }
                 overview="This is a great mocked movie"

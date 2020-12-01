@@ -9,11 +9,10 @@ import logoIcon from 'assets/ic_logo/ic_logo.png';
 import styles from 'components/Home/styles';
 import MoviesList from 'components/MoviesList';
 import useFetchPrefixUrl from 'components/common/hooks/usePrefixUrl';
-import { fetchGenres } from 'controllers/MoviesClient';
+import navigationConstants from 'constants/navigation';
 
 function Home({ navigation }) {
   const [isFetching, prefixUrl] = useFetchPrefixUrl();
-  const [genres, setGenres] = useState([]);
 
   const {
     movies,
@@ -22,30 +21,12 @@ function Home({ navigation }) {
     errorFetchingMovies,
   } = useFetchMovies();
 
-  const getGenres = ids => {
-    return ids.map(id => {
-      const foundGenre = genres.find(genre => genre.id === id);
-      return foundGenre ? foundGenre.name : null;
-    });
-  };
-
   const handleMoviePress = currentItem => {
-    const movieGenres = getGenres(currentItem.genre_ids);
-    navigation.navigate('Details', {
+    navigation.navigate(navigationConstants.details, {
       movie: currentItem,
       prefixUrl,
-      genres: movieGenres,
     });
   };
-
-  const fetchGenresCallback = useCallback(async () => {
-    const res = await fetchGenres();
-    setGenres(res.genres);
-  }, [setGenres]);
-
-  useEffect(() => {
-    fetchGenresCallback();
-  }, [fetchGenresCallback]);
 
   return !errorFetchingMovies ? (
     <>

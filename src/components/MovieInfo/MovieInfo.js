@@ -2,7 +2,9 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Star from 'react-native-star-view';
 import { PropTypes } from 'prop-types';
+
 import styles from './styles';
+import strings from 'localization';
 import textStyles from 'helpers/TextStyles';
 
 const MovieInfo = ({ releaseDate, voteAverage, overview, genres }) => {
@@ -16,7 +18,7 @@ const MovieInfo = ({ releaseDate, voteAverage, overview, genres }) => {
         {renderGenres(genres)}
       </Text>
       <Text style={[textStyles.alignCenter, styles.fontSmall]}>
-        Release date: {releaseDate}
+        {strings.releaseDate}: {releaseDate}
       </Text>
       <View style={styles.rate}>
         <Text style={textStyles.textMedium}>{voteAverage.toFixed(1)}</Text>

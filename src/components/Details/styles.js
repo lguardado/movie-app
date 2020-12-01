@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-    // top: -100,
   },
   posterThumb: {
     width: 200,

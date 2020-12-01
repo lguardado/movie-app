@@ -1,62 +1,114 @@
-import React from 'react';
-import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ScrollView,
+  Text,
+  ImageBackground,
+  View,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import { useTheme } from '@react-navigation/native';
-
 import { PropTypes } from 'prop-types';
+
 import styles from './styles';
+import Center from 'components/Center';
+import { fetchGenres } from 'controllers/MoviesClient';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
 
 const Details = ({ route }) => {
+  const [genres, setGenres] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { colors } = useTheme();
-  const { movie, genres, prefixUrl } = route.params;
+  const {
+    prefixUrl,
+    movie: {
+      backdrop_path: backdropPath,
+      poster_path: posterPath,
+      title,
+      original_title: originalTitle,
+      overview,
+      release_date: releaseDate,
+      vote_average: voteAverage,
+      genre_ids: genreIds,
+    },
+  } = route.params;
 
-  const uri = prefixUrl + movie.backdrop_path;
-  const thumbUri = prefixUrl + movie.poster_path;
+  const getGenresNames = useCallback((ids, resGenres) => {
+    return ids && resGenres
+      ? ids.map(id => {
+          const foundGenre = resGenres.find(genre => genre.id === id);
+          return foundGenre ? foundGenre.name : null;
+        })
+      : [];
+  }, []);
+
+  const fetchGenresCallback = useCallback(async () => {
+    setIsLoading(true);
+    const res = await fetchGenres();
+    const genresNames = getGenresNames(genreIds, res.genres);
+    setGenres(genresNames);
+    setIsLoading(false);
+  }, [setGenres, getGenresNames, genreIds]);
+
+  useEffect(() => {
+    fetchGenresCallback();
+  }, [fetchGenresCallback]);
+  const uri = prefixUrl + backdropPath;
+  const thumbUri = prefixUrl + posterPath;
 
   return (
-    <ScrollView testID="detail-scroll-view">
-      <ImageBackground
-        testID="image-background"
-        source={{
-          uri,
-        }}
-        style={styles.movieCard}
-        resizeMode="cover"
-      />
-      <View
-        style={[styles.container, { backgroundColor: colors.backgroundColor }]}
-      >
-        <View style={styles.detailHeader}>
-          <Image
+    <>
+      {isLoading && (
+        <Center>
+          <ActivityIndicator />
+        </Center>
+      )}
+      {!isLoading && (
+        <ScrollView testID="detail-scroll-view">
+          <ImageBackground
+            testID="image-background"
             source={{
-              uri: thumbUri,
+              uri,
             }}
-            style={styles.posterThumb}
-            resizeMode="contain"
+            style={styles.movieCard}
+            resizeMode="cover"
           />
-          <Text
+          <View
             style={[
-              { color: colors.primary },
-              styles.title,
-              textStyles.alignCenter,
+              styles.container,
+              { backgroundColor: colors.backgroundColor },
             ]}
           >
-            {movie.title}{' '}
-            {movie.title !== movie.original_title
-              ? `(${movie.original_title})`
-              : ''}
-          </Text>
-        </View>
-        <MovieInfo
-          testID="movie-info"
-          releaseDate={movie.release_date}
-          voteAverage={movie.vote_average}
-          overview={movie.overview}
-          genres={genres}
-        />
-      </View>
-    </ScrollView>
+            <View style={styles.detailHeader}>
+              <Image
+                source={{
+                  uri: thumbUri,
+                }}
+                style={styles.posterThumb}
+                resizeMode="contain"
+              />
+              <Text
+                style={[
+                  { color: colors.primary },
+                  styles.title,
+                  textStyles.alignCenter,
+                ]}
+              >
+                {title} {title !== originalTitle ? `(${originalTitle})` : ''}
+              </Text>
+            </View>
+            <MovieInfo
+              testID="movie-info"
+              releaseDate={releaseDate}
+              voteAverage={voteAverage}
+              overview={overview}
+              genres={genres}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </>
   );
 };
 

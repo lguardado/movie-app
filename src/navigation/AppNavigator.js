@@ -19,23 +19,20 @@ function HomeNavigator() {
   const androidHeaderStyle = {
     alignSelf: 'center',
   };
-  const headerLeftContainerStyle =
-    Platform.OS === 'ios'
-      ? {
-          width: 80,
-          height: 40,
-          opacity: 0.5,
-          backgroundColor: Colors.black,
-        }
-      : null;
+  const iOSHeaderStyle = {
+    color: Colors.white,
+    backgroundColor: Colors.black,
+    opacity: 0.5,
+  };
+  const headerLeftiOS = {
+    width: 80,
+    height: 40,
+    opacity: 0.5,
+    backgroundColor: Colors.black,
+  };
+  const headerLeftContainerStyle = Platform.OS === 'ios' ? headerLeftiOS : null;
   const headerTitleStyle =
-    Platform.OS === 'ios'
-      ? {
-          color: Colors.white,
-          backgroundColor: Colors.black,
-          opacity: 0.5,
-        }
-      : androidHeaderStyle;
+    Platform.OS === 'ios' ? iOSHeaderStyle : androidHeaderStyle;
 
   const headerOptions = {
     title: 'Movie details',
