@@ -79,7 +79,6 @@ function AppNavigator() {
       }}
     >
       <Tab.Screen name={home} component={HomeNavigator} />
-      <Tab.Screen name={profile} component={ProfileNavigator} />
     </Tab.Navigator>
   );
 }

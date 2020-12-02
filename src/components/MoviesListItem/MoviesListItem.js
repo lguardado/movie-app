@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, ActivityIndicator, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 
 import styles from 'components/MoviesListItem/styles';
@@ -10,7 +10,7 @@ const MoviesListItem = ({ uri, handleMoviePress }) => {
     uri && (
       <Pressable onPress={handleMoviePress}>
         <View>
-          {loadingImage && <Text style={styles.loading}>Loading...</Text>}
+          {loadingImage && <ActivityIndicator />}
           <Image
             testID="movie-image"
             source={{
