@@ -4,16 +4,25 @@ import { PropTypes } from 'prop-types';
 import MoviesListItem from 'components/MoviesListItem';
 import styles from 'components/MoviesList/styles';
 
-const MoviesList = ({ movies, urlPrefix, isFetchingMovies, fetchMore }) => {
+const MoviesList = ({
+  movies,
+  urlPrefix,
+  isFetchingMovies,
+  fetchMore,
+  handleMoviePress,
+}) => {
   const renderFooter = () => <ActivityIndicator size="large" />;
 
   const renderItem = ({ item }) => (
-    <MoviesListItem uri={urlPrefix + item.poster_path} />
+    <MoviesListItem
+      uri={urlPrefix + item.poster_path}
+      handleMoviePress={() => handleMoviePress(item)}
+    />
   );
   return movies && movies.length ? (
     <View>
       <FlatList
-        testID="moviesflatList"
+        testID="movies-flatlist"
         style={styles.flatList}
         data={movies}
         keyExtractor={item => item.id.toString()}
@@ -34,6 +43,7 @@ MoviesList.propTypes = {
   movies: PropTypes.array,
   isFetchingMovies: PropTypes.bool,
   fetchMore: PropTypes.func,
+  handleMoviePress: PropTypes.func,
 };
 
 MoviesList.defaultProps = {
@@ -41,4 +51,5 @@ MoviesList.defaultProps = {
   movies: [],
   isFetchingMovies: false,
   fetchMore: () => {},
+  handleMoviePress: () => {},
 };

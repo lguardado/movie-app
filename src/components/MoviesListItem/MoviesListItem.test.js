@@ -8,7 +8,7 @@ describe('MoviesListItem', () => {
   test('renders the <MoviesListItem /> correctly with a passed uri', () => {
     const uri = 'https://fakeUri.com';
     const { getByTestId } = render(<MoviesListItem uri={uri} />);
-    expect(getByTestId('movieImage').props).toMatchInlineSnapshot(`
+    expect(getByTestId('movie-image').props).toMatchInlineSnapshot(`
       Object {
         "children": undefined,
         "resizeMode": "contain",
@@ -19,13 +19,13 @@ describe('MoviesListItem', () => {
           "height": 600,
           "margin": 5,
         },
-        "testID": "movieImage",
+        "testID": "movie-image",
       }
     `);
   });
 
   test('does NOT render the <MoviesListItem /> when there is no uri passed to it', () => {
     const { queryByTestId } = render(<MoviesListItem />);
-    expect(queryByTestId('movieImage')).toBeNull();
+    expect(queryByTestId('movie-image')).toBeNull();
   });
 });

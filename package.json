@@ -8,6 +8,7 @@
     "clean": "watchman watch-del-all && rm -rf package-lock.json && rm -rf node_modules && rm -rf $TMPDIR/metro-* && rm -rf $TMPDIR/haste-map-* && npm install",
     "start": "react-native start",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint .",
     "postinstall": "npx jetify && npx pod-install"
   },
@@ -30,6 +31,7 @@
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.11.0",
+    "react-native-star-view": "^1.1.3",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
