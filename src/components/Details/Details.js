@@ -1,24 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  ScrollView,
-  Text,
-  ImageBackground,
-  View,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 
 import styles from './styles';
-import Center from 'components/Center';
 import { fetchGenres } from 'controllers/MoviesClient';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
 
 const Details = ({ route }) => {
   const [genres, setGenres] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetchingGenres, setIsFetchingGenres] = useState(false);
   const { colors } = useTheme();
   const {
     prefixUrl,
@@ -44,11 +36,11 @@ const Details = ({ route }) => {
   }, []);
 
   const fetchGenresCallback = useCallback(async () => {
-    setIsLoading(true);
+    setIsFetchingGenres(true);
     const res = await fetchGenres();
     const genresNames = getGenresNames(genreIds, res.genres);
     setGenres(genresNames);
-    setIsLoading(false);
+    setIsFetchingGenres(false);
   }, [setGenres, getGenresNames, genreIds]);
 
   useEffect(() => {
@@ -58,57 +50,46 @@ const Details = ({ route }) => {
   const thumbUri = prefixUrl + posterPath;
 
   return (
-    <>
-      {isLoading && (
-        <Center>
-          <ActivityIndicator />
-        </Center>
-      )}
-      {!isLoading && (
-        <ScrollView testID="detail-scroll-view">
-          <ImageBackground
-            testID="image-background"
+    <ScrollView testID="detail-scroll-view">
+      <ImageBackground
+        testID="image-background"
+        source={{
+          uri,
+        }}
+        style={styles.movieCard}
+        resizeMode="cover"
+      />
+      <View
+        style={[styles.container, { backgroundColor: colors.backgroundColor }]}
+      >
+        <View style={styles.detailHeader}>
+          <Image
             source={{
-              uri,
+              uri: thumbUri,
             }}
-            style={styles.movieCard}
-            resizeMode="cover"
+            style={styles.posterThumb}
+            resizeMode="contain"
           />
-          <View
+          <Text
             style={[
-              styles.container,
-              { backgroundColor: colors.backgroundColor },
+              { color: colors.primary },
+              styles.title,
+              textStyles.alignCenter,
             ]}
           >
-            <View style={styles.detailHeader}>
-              <Image
-                source={{
-                  uri: thumbUri,
-                }}
-                style={styles.posterThumb}
-                resizeMode="contain"
-              />
-              <Text
-                style={[
-                  { color: colors.primary },
-                  styles.title,
-                  textStyles.alignCenter,
-                ]}
-              >
-                {title} {title !== originalTitle ? `(${originalTitle})` : ''}
-              </Text>
-            </View>
-            <MovieInfo
-              testID="movie-info"
-              releaseDate={releaseDate}
-              voteAverage={voteAverage}
-              overview={overview}
-              genres={genres}
-            />
-          </View>
-        </ScrollView>
-      )}
-    </>
+            {title} {title !== originalTitle ? `(${originalTitle})` : ''}
+          </Text>
+        </View>
+        <MovieInfo
+          testID="movie-info"
+          releaseDate={releaseDate}
+          voteAverage={voteAverage}
+          overview={overview}
+          genres={genres}
+          isFetchingGenres={isFetchingGenres}
+        />
+      </View>
+    </ScrollView>
   );
 };
 

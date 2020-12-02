@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import Star from 'react-native-star-view';
 import { PropTypes } from 'prop-types';
 
@@ -7,7 +7,13 @@ import styles from './styles';
 import strings from 'localization';
 import textStyles from 'helpers/TextStyles';
 
-const MovieInfo = ({ releaseDate, voteAverage, overview, genres }) => {
+const MovieInfo = ({
+  releaseDate,
+  voteAverage,
+  overview,
+  genres,
+  isFetchingGenres,
+}) => {
   const renderGenres = g => g.join(', ');
 
   return (
@@ -15,7 +21,7 @@ const MovieInfo = ({ releaseDate, voteAverage, overview, genres }) => {
       <Text
         style={[textStyles.alignCenter, styles.genres, textStyles.textMedium]}
       >
-        {renderGenres(genres)}
+        {isFetchingGenres ? <ActivityIndicator /> : renderGenres(genres)}
       </Text>
       <Text style={[textStyles.alignCenter, styles.fontSmall]}>
         {strings.releaseDate}: {releaseDate}
@@ -43,6 +49,7 @@ MovieInfo.propTypes = {
   voteAverage: PropTypes.number,
   overview: PropTypes.string,
   genres: PropTypes.array,
+  isFetchingGenres: PropTypes.bool,
 };
 
 MovieInfo.defaultProps = {
@@ -50,4 +57,5 @@ MovieInfo.defaultProps = {
   voteAverage: 0,
   overview: '',
   genres: [],
+  isFetchingGenres: false,
 };
