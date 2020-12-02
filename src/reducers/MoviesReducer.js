@@ -8,10 +8,10 @@ const initialState = {
 };
 
 const addNewMovies = (prevMovies, moviesToAdd) => {
-  const newArray = [...prevMovies];
+  const newArray = prevMovies ? [...prevMovies] : [];
   // Verifying the items in the new array are not existing before ading them
   moviesToAdd.forEach(element => {
-    if (!prevMovies.includes(el => el.id === element.id)) {
+    if (!newArray.find(el => el.id === element.id)) {
       newArray.push(element);
     }
   });
@@ -30,6 +30,8 @@ const moviesReducer = (state = initialState, { payload, type }) => {
       return { ...state, prefixUrl: payload.prefix };
     case actionTypes.FETCH_GENRES_SUCCESS:
       return { ...state, genres: payload.genres };
+    case actionTypes.CLEAR_STORE:
+      return initialState;
     default:
       return state;
   }

@@ -46,7 +46,7 @@ describe('Home', () => {
           <MoviesList
             fetchMore={[Function]}
             handleMoviePress={[Function]}
-            isFetchingMovies={false}
+            isFetchingMovies={true}
             movies={
               Array [
                 Object {

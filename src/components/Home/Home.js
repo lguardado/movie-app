@@ -23,7 +23,7 @@ function Home({ navigation }) {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(
-    state => isLoadingSelector([actionTypes.MOVIES], state),
+    state => isLoadingSelector([actionTypes.FETCH_MOVIES], state),
     shallowEqual
   );
 

@@ -8,7 +8,8 @@ export const actionTypes = {
   FETCH_MOVIES_REQUEST: 'FETCH_MOVIES_REQUEST',
   FETCH_MOVIES_SUCCESS: 'FETCH_MOVIES_SUCCESS',
   FETCH_MOVIES_ERROR: 'FETCH_MOVIES_ERROR',
-  MOVIES: 'MOVIES',
+  CLEAR_STORE: 'CLEAR_STORE',
+  FETCH_MOVIES: 'FETCH_MOVIES',
   FETCH_PREFIX_REQUEST: 'FETCH_PREFIX_REQUEST',
   FETCH_PREFIX_SUCCESS: 'FETCH_PREFIX_SUCCESS',
   FETCH_PREFIXIG_ERROR: 'FETCH_PREFIXIG_ERROR',
@@ -25,6 +26,11 @@ const fetchMoviesRequest = () => ({
 const fetchMoviesError = error => ({
   type: actionTypes.FETCH_MOVIES_ERROR,
   payload: { error },
+});
+
+const clearStore = () => ({
+  type: actionTypes.CLEAR_STORE,
+  payload: null,
 });
 
 const fetchMoviesSuccess = movies => ({
@@ -96,4 +102,8 @@ export const fetchGenres = () => async dispatch => {
   } catch (error) {
     dispatch(fetchGenresError(error.message));
   }
+};
+
+export const clearMoviesStore = async dispatch => {
+  dispatch(clearStore());
 };
