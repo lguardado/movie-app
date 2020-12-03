@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
     textAlign: 'center',
-    // width: '60%',
   },
 });
 
