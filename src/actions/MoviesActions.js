@@ -17,6 +17,8 @@ export const actionTypes = {
   FETCH_GENRES_REQUEST: 'FETCH_GENRES_REQUEST',
   FETCH_GENRES_SUCCESS: 'FETCH_GENRES_SUCCESS',
   FETCH_GENRESIG_ERROR: 'FETCH_GENRESIG_ERROR',
+  ADD_FAVOURITE: 'ADD_FAVOURITE',
+  REMOVE_FAVOURITE: 'REMOVE_FAVOURITE',
 };
 
 const fetchMoviesRequest = () => ({
@@ -37,6 +39,16 @@ const clearStore = () => ({
 const fetchMoviesSuccess = movies => ({
   type: actionTypes.FETCH_MOVIES_SUCCESS,
   payload: { movies },
+});
+
+export const addFavourite = id => ({
+  type: actionTypes.ADD_FAVOURITE,
+  payload: { id },
+});
+
+export const removeFavourite = id => ({
+  type: actionTypes.REMOVE_FAVOURITE,
+  payload: { id },
 });
 
 export const fetchMovies = page => async dispatch => {

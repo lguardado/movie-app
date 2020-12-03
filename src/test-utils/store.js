@@ -10,6 +10,7 @@ const initialStore = {
     data: [],
     page: 1,
     prefixUrl: '',
+    favourites: [],
   },
 };
 

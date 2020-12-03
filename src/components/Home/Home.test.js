@@ -12,8 +12,8 @@ const fakeStore = {
   status: {},
   movies: {
     data: [
-      { id: 'foo', poster_path: 'path' },
-      { id: 'bar', poster_path: 'another_path' },
+      { id: 1, poster_path: 'path' },
+      { id: 2, poster_path: 'another_path' },
     ],
     prefixUrl: 'http://foo.bar/w780',
   },
@@ -50,11 +50,11 @@ describe('Home', () => {
             movies={
               Array [
                 Object {
-                  "id": "foo",
+                  "id": 1,
                   "poster_path": "path",
                 },
                 Object {
-                  "id": "bar",
+                  "id": 2,
                   "poster_path": "another_path",
                 },
               ]

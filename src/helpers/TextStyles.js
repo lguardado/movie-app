@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  lightTitle: {
+  boldTitle: {
     fontSize: 18,
     fontWeight: '700',
   },
