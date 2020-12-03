@@ -45,6 +45,10 @@ const Details = ({ route }) => {
   }, [dispatch]);
   const isFav = useSelector(state => isFavourite(state, id));
 
+  useEffect(() => {
+    dispatch(fetchGenres());
+  }, [dispatch]);
+
   const onAddFavourite = movieId => dispatch(addFavourite(movieId));
 
   const onRemoveFavourite = movieId => dispatch(removeFavourite(movieId));
