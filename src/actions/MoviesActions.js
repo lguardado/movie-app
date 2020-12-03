@@ -3,6 +3,7 @@ import {
   fetchConfiguration as fetchConfigAsync,
   fetchGenres as fetchGenresAsync,
 } from 'controllers/MoviesClient';
+import imageConstants from 'constants/images';
 
 export const actionTypes = {
   FETCH_MOVIES_REQUEST: 'FETCH_MOVIES_REQUEST',
@@ -65,13 +66,13 @@ const fetchPrefixSuccess = prefix => ({
 });
 
 export const fetchPrefix = () => async dispatch => {
-  const small = 1;
   dispatch(fetchPrefixRequest());
   try {
     const prefix = await fetchConfigAsync();
     dispatch(
       fetchPrefixSuccess(
-        prefix.images.base_url + prefix.images.backdrop_sizes[small]
+        prefix.images.base_url +
+          prefix.images.backdrop_sizes[imageConstants.small]
       )
     );
   } catch (error) {

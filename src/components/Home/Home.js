@@ -7,12 +7,7 @@ import ErrorView from 'components/common/ErrorView';
 import errorsSelector from 'selectors/ErrorSelectors';
 import { isLoadingSelector } from 'selectors/StatusSelectors';
 import { getMovies, getPage, getPrefixUrl } from 'selectors/MoviesSelectors';
-import {
-  actionTypes,
-  fetchMovies,
-  fetchPrefix,
-  fetchGenres,
-} from 'actions/MoviesActions';
+import { actionTypes, fetchMovies, fetchPrefix } from 'actions/MoviesActions';
 import navigationConstants from 'constants/navigation';
 import Center from 'components/Center';
 import logoIcon from 'assets/ic_logo/ic_logo.png';
@@ -49,7 +44,6 @@ function Home({ navigation }) {
   useEffect(() => {
     dispatch(fetchMovies());
     dispatch(fetchPrefix());
-    dispatch(fetchGenres());
   }, [dispatch]);
 
   return (

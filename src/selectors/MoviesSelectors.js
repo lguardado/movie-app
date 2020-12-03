@@ -6,8 +6,11 @@ export function getMovies(state) {
   return state.movies.data;
 }
 
-export function getGenres(state) {
-  return state.movies.genres;
+export function getGenresNames(state, ids) {
+  return ids.map(id => {
+    const foundGenre = state.movies.genres.find(genre => genre.id === id);
+    return foundGenre ? foundGenre.name : null;
+  });
 }
 
 export function getPage(state) {

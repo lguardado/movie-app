@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import styles from './styles';
+import { fetchGenres } from 'actions/MoviesActions';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
-import { getGenres, getPrefixUrl } from 'selectors/MoviesSelectors';
+import { getGenresNames, getPrefixUrl } from 'selectors/MoviesSelectors';
 
 const Details = ({ route }) => {
+  const dispatch = useDispatch();
   const { colors } = useTheme();
   const {
     movie: {
@@ -25,16 +27,13 @@ const Details = ({ route }) => {
   } = route.params;
 
   const prefixUrl = useSelector(state => getPrefixUrl(state));
-  const genres = useSelector(state => getGenres(state));
+  const genresNames = useSelector(state => getGenresNames(state, genreIds));
   const uri = prefixUrl + backdropPath;
   const thumbUri = prefixUrl + posterPath;
 
-  const getGenresNames = ids => {
-    return ids.map(id => {
-      const foundGenre = genres.find(genre => genre.id === id);
-      return foundGenre ? foundGenre.name : null;
-    });
-  };
+  useEffect(() => {
+    dispatch(fetchGenres());
+  }, [dispatch]);
 
   return (
     <ScrollView testID="detail-scroll-view">
@@ -72,7 +71,7 @@ const Details = ({ route }) => {
           releaseDate={releaseDate}
           voteAverage={voteAverage}
           overview={overview}
-          genres={getGenresNames(genreIds)}
+          genres={genresNames}
         />
       </View>
     </ScrollView>
