@@ -23,7 +23,7 @@ function Home({ navigation }) {
   );
 
   const errors = useSelector(
-    state => errorsSelector([actionTypes.MOVIES], state),
+    state => errorsSelector([actionTypes.FETCH_MOVIES], state),
     shallowEqual
   );
 
@@ -42,12 +42,15 @@ function Home({ navigation }) {
   };
 
   useEffect(() => {
-    dispatch(fetchMovies());
+    if (!movies.length) {
+      dispatch(fetchMovies());
+    }
     dispatch(fetchPrefix());
-  }, [dispatch]);
+  }, [dispatch, movies]);
 
   return (
     <>
+      <ErrorView errors={errors} />
       {isLoading && (
         <Center testID="loading" style={styles.loading}>
           <ActivityIndicator size="large" />
@@ -65,7 +68,6 @@ function Home({ navigation }) {
           handleMoviePress={handleMoviePress}
         />
       </View>
-      <ErrorView errors={errors} />
     </>
   );
 }

@@ -46,7 +46,7 @@ describe('Home', () => {
           <MoviesList
             fetchMore={[Function]}
             handleMoviePress={[Function]}
-            isFetchingMovies={true}
+            isFetchingMovies={false}
             movies={
               Array [
                 Object {
@@ -69,18 +69,4 @@ describe('Home', () => {
       }
     `);
   });
-
-  // todo: fix this test, the error element isn't being found in the dom.
-  // test('should show an error if movies can\t be fetched', () => {
-  //   useFetchMovies.mockReturnValue({
-  //     movies: [],
-  //     fetchMore: jest.fn(),
-  //     isFetching: false,
-  //     error: { message: 'error fetching movies' },
-  //   });
-  //   const { getByTestId } = renderWithProviders(<Home />, {
-  //     initialState: fakeStore,
-  //   });
-  //   expect(getByTestId('error').props).toBeTruthy();
-  // });
 });

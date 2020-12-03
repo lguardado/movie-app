@@ -9,32 +9,6 @@ import {
 
 jest.mock('controllers/MoviesClient');
 
-// mocking responses from server
-fetchMovies.mockReturnValueOnce(
-  Promise.resolve({
-    results: [
-      { id: 'foo', poster_path: 'path' },
-      { id: 'bar', poster_path: 'another_path' },
-    ],
-  })
-);
-fetchConfiguration.mockReturnValueOnce(
-  Promise.resolve({
-    images: {
-      base_url: 'http://foo.bar/',
-      backdrop_sizes: ['w300', 'w780'],
-    },
-  })
-);
-fetchGenres.mockReturnValueOnce(
-  Promise.resolve({
-    genres: [
-      { id: 1, name: 'mockGenre1' },
-      { id: 2, name: 'mockGenre2' },
-    ],
-  })
-);
-
 // Actions
 const movieActions = [
   {
@@ -48,6 +22,19 @@ const movieActions = [
         { id: 'foo', poster_path: 'path' },
         { id: 'bar', poster_path: 'another_path' },
       ],
+    },
+  },
+];
+
+const movieErrorActions = [
+  {
+    type: moviesActions.actionTypes.FETCH_MOVIES_REQUEST,
+    payload: null,
+  },
+  {
+    type: moviesActions.actionTypes.FETCH_MOVIES_ERROR,
+    payload: {
+      error: 'error fetching',
     },
   },
 ];
@@ -78,7 +65,15 @@ const genresActions = [
   },
 ];
 
-describe('UserActions', () => {
+describe('MoviesActions', () => {
+  fetchMovies.mockReturnValueOnce(
+    Promise.resolve({
+      results: [
+        { id: 'foo', poster_path: 'path' },
+        { id: 'bar', poster_path: 'another_path' },
+      ],
+    })
+  );
   const mockStore = configureStore([thunk]);
 
   it('should create an action for fetchMovies', async () => {
@@ -89,7 +84,27 @@ describe('UserActions', () => {
     expect(actions).toEqual(movieActions);
   });
 
+  it('should create an action for fetchMovies when errored', async () => {
+    // mocking error response from server
+    fetchMovies.mockReturnValueOnce(
+      Promise.reject(new Error('error fetching'))
+    );
+    const store = mockStore({});
+
+    await store.dispatch(moviesActions.fetchMovies());
+    const actions = store.getActions();
+    expect(actions).toEqual(movieErrorActions);
+  });
+
   it('should create an action for fetchPrefix', async () => {
+    fetchConfiguration.mockReturnValueOnce(
+      Promise.resolve({
+        images: {
+          base_url: 'http://foo.bar/',
+          backdrop_sizes: ['w300', 'w780'],
+        },
+      })
+    );
     const store = mockStore({});
 
     await store.dispatch(moviesActions.fetchPrefix());
@@ -98,6 +113,14 @@ describe('UserActions', () => {
   });
 
   it('should create an action for fetchGenres', async () => {
+    fetchGenres.mockReturnValueOnce(
+      Promise.resolve({
+        genres: [
+          { id: 1, name: 'mockGenre1' },
+          { id: 2, name: 'mockGenre2' },
+        ],
+      })
+    );
     const store = mockStore({});
 
     await store.dispatch(moviesActions.fetchGenres());
