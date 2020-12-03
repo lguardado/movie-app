@@ -116,7 +116,3 @@ export const fetchGenres = () => async dispatch => {
     dispatch(fetchGenresError(error.message));
   }
 };
-
-export const clearMoviesStore = async dispatch => {
-  dispatch(clearStore());
-};

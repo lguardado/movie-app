@@ -1,5 +1,4 @@
 import UserController from 'controllers/UserController';
-import { clearMoviesStore } from 'actions/MoviesActions';
 
 export const actionTypes = {
   CLEAR_STORE: 'CLEAR_STORE',
@@ -44,6 +43,5 @@ export const logout = () => async dispatch => {
     await UserController.logout();
   } finally {
     dispatch(clearStore());
-    clearMoviesStore();
   }
 };

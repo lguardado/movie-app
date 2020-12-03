@@ -17,13 +17,13 @@ const MoviesListItem = ({ uri, handleMoviePress, id }) => {
     uri && (
       <Pressable onPress={handleMoviePress}>
         <View>
+          {loadingImage && <ActivityIndicator />}
           {!loadingImage && isFav ? (
             <View style={styles.favourite} testID="favourite">
               <Text style={[textStyles.fieldTitle, { color: Colors.white }]}>
                 In my list
               </Text>
               <View>
-                {loadingImage && <ActivityIndicator />}
                 <Image style={styles.star} source={starIcon} />
               </View>
             </View>
