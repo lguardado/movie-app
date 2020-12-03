@@ -1,21 +1,27 @@
-import React from 'react';
-import { Image, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, ActivityIndicator, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 
 import styles from 'components/MoviesListItem/styles';
 
 const MoviesListItem = ({ uri, handleMoviePress }) => {
+  const [loadingImage, setLoadingImage] = useState(false);
   return (
     uri && (
       <Pressable onPress={handleMoviePress}>
-        <Image
-          testID="movie-image"
-          source={{
-            uri,
-          }}
-          style={styles.item}
-          resizeMode="contain"
-        />
+        <View>
+          {loadingImage && <ActivityIndicator />}
+          <Image
+            testID="movie-image"
+            source={{
+              uri,
+            }}
+            onLoadStart={() => setLoadingImage(true)}
+            onLoadEnd={() => setLoadingImage(false)}
+            style={styles.item}
+            resizeMode="contain"
+          />
+        </View>
       </Pressable>
     )
   );

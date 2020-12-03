@@ -1,9 +1,7 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import Details from 'components/Details';
-import { fetchGenres } from 'controllers/MoviesClient';
-
-jest.mock('controllers/MoviesClient');
+import { renderWithProviders } from 'test-utils/render';
 
 const fakeRoute = {
   params: {
@@ -22,42 +20,54 @@ const fakeRoute = {
 };
 
 const fakeRouteWithSameTitle = {
-  ...fakeRoute,
   params: {
-    ...fakeRoute.params,
     movie: {
-      ...fakeRoute.params.movie,
-      original_title: fakeRoute.params.movie.title,
+      id: 'fakeId',
+      backdrop_path: '/bar.jpeg',
+      poster_path: '/bar.big.jpeg',
+      title: 'Original Title',
+      original_title: 'Original Title',
+      release_date: '10/10/2020',
+      vote_average: 8,
+      overview: 'This is a great mocked movie',
+      genre_ids: [1, 2],
     },
   },
 };
 
-fetchGenres.mockResolvedValue(
-  Promise.resolve({
+const fakeStore = {
+  user: {
+    id: 1,
+    name: 'John',
+    email: 'john.doe@example.com',
+  },
+  error: {},
+  status: {},
+  movies: {
     genres: [
       { id: 1, name: 'mockGenre1' },
       { id: 2, name: 'mockGenre2' },
     ],
-  })
-);
+  },
+};
 
 const renderDetails = props => {
-  return render(<Details {...props} />);
+  return renderWithProviders(<Details {...props} />, {
+    initialState: fakeStore,
+  });
 };
 
 describe('Details', () => {
   afterEach(cleanup);
 
   test('render <Details /> without crashing', () => {
-    render(<Details route={fakeRoute} />);
+    renderDetails({ route: fakeRoute });
   });
 
-  test("it doesn't render the original title when it's the same as the title", async () => {
-    const { findByText } = renderDetails({
-      route: fakeRouteWithSameTitle,
-    });
-    const movieTitle = await findByText(/Fake Movie/);
-    expect(movieTitle.props.children).toContain('Fake Movie');
+  test("it doesn't render the original title when it's the same as the title", () => {
+    const { queryByText } = renderDetails({ route: fakeRouteWithSameTitle });
+    const movieTitle = queryByText(/Original Title/);
+    expect(movieTitle.props.children).toContain('Original Title');
     expect(movieTitle.props.children).not.toContain('(');
   });
 

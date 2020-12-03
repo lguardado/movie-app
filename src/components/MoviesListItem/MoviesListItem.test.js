@@ -11,6 +11,8 @@ describe('MoviesListItem', () => {
     expect(getByTestId('movie-image').props).toMatchInlineSnapshot(`
       Object {
         "children": undefined,
+        "onLoadEnd": [Function],
+        "onLoadStart": [Function],
         "resizeMode": "contain",
         "source": Object {
           "uri": "https://fakeUri.com",

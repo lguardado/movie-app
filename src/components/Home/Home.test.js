@@ -1,9 +1,6 @@
 import React from 'react';
 import Home from 'components/Home';
 import { renderWithProviders } from 'test-utils/render';
-import useFetchMovies from 'components/common/hooks/useFetchMovies';
-
-jest.mock('components/common/hooks/useFetchMovies');
 
 const fakeStore = {
   user: {
@@ -13,22 +10,17 @@ const fakeStore = {
   },
   error: {},
   status: {},
+  movies: {
+    data: [
+      { id: 'foo', poster_path: 'path' },
+      { id: 'bar', poster_path: 'another_path' },
+    ],
+    prefixUrl: 'http://foo.bar/w780',
+  },
 };
 
-const mockMovies = [
-  { id: 'foo', poster_path: 'path' },
-  { id: 'bar', poster_path: 'another_path' },
-];
-
 describe('Home', () => {
-  test('should render a movies container', async () => {
-    useFetchMovies.mockReturnValue({
-      movies: mockMovies,
-      fetchMore: jest.fn(),
-      isFetching: false,
-      error: null,
-    });
-
+  test('should render a movies container', () => {
     const { getByTestId } = renderWithProviders(<Home />, {
       initialState: fakeStore,
     });
@@ -51,7 +43,24 @@ describe('Home', () => {
               }
             />
           </Center>,
-          false,
+          <MoviesList
+            fetchMore={[Function]}
+            handleMoviePress={[Function]}
+            isFetchingMovies={true}
+            movies={
+              Array [
+                Object {
+                  "id": "foo",
+                  "poster_path": "path",
+                },
+                Object {
+                  "id": "bar",
+                  "poster_path": "another_path",
+                },
+              ]
+            }
+            urlPrefix="http://foo.bar/w780"
+          />,
         ],
         "style": Object {
           "backgroundColor": "black",

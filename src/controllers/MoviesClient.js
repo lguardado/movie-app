@@ -40,5 +40,7 @@ export const fetchGenres = async () => {
 };
 
 export const fetchConfiguration = async () => {
-  return get('/configuration');
+  return get('/configuration').catch(err => {
+    throw new Error(err.message);
+  });
 };
