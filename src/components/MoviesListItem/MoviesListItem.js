@@ -3,6 +3,7 @@ import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import strings from 'localization';
 import starIcon from 'assets/ic_star/ic_star.png';
 import styles from 'components/MoviesListItem/styles';
 import { isFavourite } from 'selectors/MoviesSelectors';
@@ -21,7 +22,7 @@ const MoviesListItem = ({ uri, handleMoviePress, id }) => {
           {!loadingImage && isFav ? (
             <View style={styles.favourite} testID="favourite">
               <Text style={[textStyles.fieldTitle, { color: Colors.white }]}>
-                In my list
+                {strings.myList}
               </Text>
               <View>
                 <Image style={styles.star} source={starIcon} />
