@@ -1,16 +1,39 @@
-import { cleanup, fireEvent, render } from '@testing-library/react-native';
+import { cleanup } from '@testing-library/react-native';
 import React from 'react';
 import MoviesList from 'components/MoviesList';
+import { renderWithProviders } from 'test-utils/render';
 
 const mockMovies = [
-  { id: 'foo', poster_path: 'path' },
-  { id: 'bar', poster_path: 'another_path' },
+  { id: 1, poster_path: 'path' },
+  { id: 2, poster_path: 'another_path' },
 ];
+
+const fakeStore = {
+  user: {
+    id: 1,
+    name: 'John',
+    email: 'john.doe@example.com',
+  },
+  error: {},
+  status: {},
+  movies: {
+    data: [
+      { id: 1, poster_path: 'path' },
+      { id: 2, poster_path: 'another_path' },
+    ],
+    genres: [
+      { id: 1, name: 'mockGenre1' },
+      { id: 2, name: 'mockGenre2' },
+    ],
+  },
+};
 
 afterEach(cleanup);
 
 const renderMoviesList = props => {
-  return render(<MoviesList {...props} />);
+  return renderWithProviders(<MoviesList {...props} />, {
+    initialState: fakeStore,
+  });
 };
 
 describe('Movies List', () => {
@@ -22,21 +45,32 @@ describe('Movies List', () => {
     handleMoviePress: jest.fn(),
   };
 
-  test('it renders the movies list correctly', () => {
-    const { queryByTestId } = renderMoviesList(props);
-    const el = queryByTestId('movies-flatlist');
-    expect(el.props.data).toEqual(mockMovies);
+  test('it renders the movies list correctly', async () => {
+    const { findByTestId } = renderMoviesList(props);
+    const el = await findByTestId('movies-flatlist');
+    expect(el.props.data).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "id": 1,
+          "poster_path": "path",
+        },
+        Object {
+          "id": 2,
+          "poster_path": "another_path",
+        },
+      ]
+    `);
   });
 
-  test('handles tapping in a movie', () => {
-    const { queryAllByTestId } = renderMoviesList(props);
-    const el = queryAllByTestId('movie-image')[0];
-    fireEvent.press(el);
-    expect(props.handleMoviePress).toHaveBeenCalledTimes(1);
-  });
-
-  test('it does NOT render a <MoviesList />  when there are no movies', () => {
-    const { queryByTestId } = renderMoviesList();
+  test('it does NOT render a <MoviesList />  when there are no movies', async () => {
+    const noMovieProps = {
+      movies: [],
+      fetchMore: jest.fn(),
+      isFetching: false,
+      error: null,
+      handleMoviePress: jest.fn(),
+    };
+    const { queryByTestId } = renderMoviesList(noMovieProps);
     expect(queryByTestId('movies-flatlist')).toBeNull();
   });
 });

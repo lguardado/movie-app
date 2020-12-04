@@ -180,6 +180,8 @@ describe('Details', () => {
                     "mockGenre2",
                   ]
                 }
+                handleFavouritePress={[Function]}
+                isFavourite={false}
                 overview="This is a great mocked movie"
                 releaseDate="10/10/2020"
                 testID="movie-info"

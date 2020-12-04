@@ -5,16 +5,25 @@ import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import styles from './styles';
-import { fetchGenres } from 'actions/MoviesActions';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
-import { getGenresNames, getPrefixUrl } from 'selectors/MoviesSelectors';
+import {
+  getGenresNames,
+  getPrefixUrl,
+  isFavourite,
+} from 'selectors/MoviesSelectors';
+import {
+  addFavourite,
+  removeFavourite,
+  fetchGenres,
+} from 'actions/MoviesActions';
 
 const Details = ({ route }) => {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const {
     movie: {
+      id,
       backdrop_path: backdropPath,
       poster_path: posterPath,
       title,
@@ -34,6 +43,23 @@ const Details = ({ route }) => {
   useEffect(() => {
     dispatch(fetchGenres());
   }, [dispatch]);
+  const isFav = useSelector(state => isFavourite(state, id));
+
+  useEffect(() => {
+    dispatch(fetchGenres());
+  }, [dispatch]);
+
+  const onAddFavourite = movieId => dispatch(addFavourite(movieId));
+
+  const onRemoveFavourite = movieId => dispatch(removeFavourite(movieId));
+
+  const onToggleMovie = () => {
+    if (isFav) {
+      onRemoveFavourite(id);
+    } else {
+      onAddFavourite(id);
+    }
+  };
 
   return (
     <ScrollView testID="detail-scroll-view">
@@ -72,6 +98,8 @@ const Details = ({ route }) => {
           voteAverage={voteAverage}
           overview={overview}
           genres={genresNames}
+          isFavourite={isFav}
+          handleFavouritePress={onToggleMovie}
         />
       </View>
     </ScrollView>

@@ -5,6 +5,7 @@ const initialState = {
   page: 1,
   prefixUrl: '',
   genres: [],
+  favourites: [],
 };
 
 const addNewMovies = (prevMovies, moviesToAdd) => {
@@ -32,6 +33,18 @@ const moviesReducer = (state = initialState, { payload, type }) => {
       return { ...state, genres: payload.genres };
     case actionTypes.CLEAR_STORE:
       return initialState;
+    case actionTypes.ADD_FAVOURITE:
+      return {
+        ...state,
+        favourites: state.favourites
+          ? state.favourites.concat(payload.id)
+          : [payload.id],
+      };
+    case actionTypes.REMOVE_FAVOURITE:
+      return {
+        ...state,
+        favourites: state.favourites.filter(id => id !== payload.id),
+      };
     default:
       return state;
   }

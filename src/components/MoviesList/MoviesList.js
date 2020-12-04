@@ -13,12 +13,16 @@ const MoviesList = ({
 }) => {
   const renderFooter = () => <ActivityIndicator size="large" />;
 
-  const renderItem = ({ item }) => (
-    <MoviesListItem
-      uri={urlPrefix + item.poster_path}
-      handleMoviePress={() => handleMoviePress(item)}
-    />
-  );
+  const renderItem = ({ item }) => {
+    const { id, poster_path: path } = item;
+    return (
+      <MoviesListItem
+        id={id}
+        uri={urlPrefix + path}
+        handleMoviePress={() => handleMoviePress(item)}
+      />
+    );
+  };
   return movies && movies.length ? (
     <View>
       <FlatList

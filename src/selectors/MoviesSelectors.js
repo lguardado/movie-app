@@ -16,3 +16,13 @@ export function getGenresNames(state, ids) {
 export function getPage(state) {
   return state.movies.page;
 }
+
+export function getFavourites(state) {
+  return state.movies.favourites;
+}
+
+export function isFavourite(state, id) {
+  return state.movies.favourites && state.movies.favourites.length
+    ? state.movies.favourites.includes(id)
+    : false;
+}
