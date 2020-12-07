@@ -1,7 +1,10 @@
 const Colors = {
   black: 'black',
-  white: 'white',
   coral: 'coral',
+  green: 'green',
+  lightGray: 'lightgray',
+  transparent: 'transparent',
+  white: 'white',
 };
 
 export default Colors;

@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'normal',
   },
+  textRegular: {
+    fontSize: 18,
+    fontWeight: 'normal',
+  },
   textMedium: {
     fontSize: 20,
     fontWeight: 'normal',

@@ -39,16 +39,24 @@ describe('MoviesListItem', () => {
     expect(image.props).toMatchInlineSnapshot(`
       Object {
         "children": undefined,
-        "onLoadEnd": [Function],
+        "onFastImageError": undefined,
+        "onFastImageLoad": undefined,
+        "onFastImageLoadEnd": [Function],
+        "onFastImageLoadStart": undefined,
+        "onFastImageProgress": undefined,
         "resizeMode": "contain",
         "source": Object {
           "uri": "https://fakeUri.com",
         },
         "style": Object {
-          "height": 600,
-          "margin": 5,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         },
         "testID": "movie-image",
+        "tintColor": undefined,
       }
     `);
   });

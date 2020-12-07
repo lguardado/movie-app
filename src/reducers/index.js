@@ -6,15 +6,9 @@ import status from 'reducers/StatusReducer';
 import user from 'reducers/UserReducer';
 import movies from 'reducers/MoviesReducer';
 
-const moviesPersistConfig = {
-  key: 'movies',
-  storage: AsyncStorage,
-  whitelist: ['favourites'],
-};
-
 export default combineReducers({
   error,
   status,
   user,
-  movies: persistReducer(moviesPersistConfig, movies),
+  movies,
 });

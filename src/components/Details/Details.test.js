@@ -93,7 +93,29 @@ describe('Details', () => {
         "children": Array [
           undefined,
           <View>
-            <ImageBackground
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "lightgray",
+                  "flex": 1,
+                  "height": 300,
+                  "padding": 20,
+                  "position": "absolute",
+                  "width": "100%",
+                }
+              }
+            >
+              <Image
+                resizeMode="center"
+                source={
+                  Object {
+                    "testUri": "../../../src/assets/img_placeholder/not-found.png",
+                  }
+                }
+              />
+            </View>
+            <FastImage
               resizeMode="cover"
               source={
                 Object {
@@ -130,7 +152,37 @@ describe('Details', () => {
                   }
                 }
               >
-                <Image
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "white",
+                      "borderColor": "white",
+                      "borderWidth": 0.5,
+                      "flex": 1,
+                      "height": 188,
+                      "justifyContent": "center",
+                      "position": "absolute",
+                      "width": 125,
+                    }
+                  }
+                >
+                  <Image
+                    resizeMode="stretch"
+                    source={
+                      Object {
+                        "testUri": "../../../src/assets/img_placeholder/not-found.png",
+                      }
+                    }
+                    style={
+                      Object {
+                        "height": 100,
+                        "width": 100,
+                      }
+                    }
+                  />
+                </View>
+                <FastImage
                   resizeMode="contain"
                   source={
                     Object {
@@ -148,6 +200,7 @@ describe('Details', () => {
                   }
                 />
                 <Text
+                  onPress={[Function]}
                   style={
                     Array [
                       Object {
