@@ -18,7 +18,6 @@ import {
   addFavourite,
   removeFavourite,
   fetchGenres,
-  setLastFecthDate,
 } from 'actions/MoviesActions';
 
 const Details = ({ route }) => {
@@ -96,11 +95,6 @@ const Details = ({ route }) => {
             resizeMode={FastImage.resizeMode.contain}
           />
           <Text
-            // TODO REMOVE THIS! IT'S JUST FOR TESTING PUR
-            onPress={() => {
-              alert('Triggered false due date!');
-              dispatch(setLastFecthDate(new Date('2020-11-04T16:36:24.744Z')));
-            }}
             style={[
               { color: colors.primary },
               styles.title,

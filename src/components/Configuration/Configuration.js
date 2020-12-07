@@ -18,7 +18,7 @@ const Configuration = () => {
     if (!days) {
       return;
     }
-    dispatch(setDataExpirationDays({ days }));
+    dispatch(setDataExpirationDays({ days: Math.round(days) }));
     setShowSave(true);
     setTimeout(() => {
       setShowSave(false);
