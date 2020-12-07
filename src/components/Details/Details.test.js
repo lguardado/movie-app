@@ -36,13 +36,6 @@ const fakeRouteWithSameTitle = {
 };
 
 const fakeStore = {
-  user: {
-    id: 1,
-    name: 'John',
-    email: 'john.doe@example.com',
-  },
-  error: {},
-  status: {},
   movies: {
     genres: [
       { id: 1, name: 'mockGenre1' },
@@ -105,6 +98,7 @@ describe('Details', () => {
                   "width": "100%",
                 }
               }
+              testID="placeholder"
             >
               <Image
                 resizeMode="center"
@@ -244,6 +238,30 @@ describe('Details', () => {
           </View>,
         ],
         "testID": "detail-scroll-view",
+      }
+    `);
+
+    const placeholder = await findByTestId('placeholder');
+    expect(placeholder.props).toMatchInlineSnapshot(`
+      Object {
+        "children": <Image
+          resizeMode="center"
+          source={
+            Object {
+              "testUri": "../../../src/assets/img_placeholder/not-found.png",
+            }
+          }
+        />,
+        "style": Object {
+          "alignItems": "center",
+          "backgroundColor": "lightgray",
+          "flex": 1,
+          "height": 300,
+          "padding": 20,
+          "position": "absolute",
+          "width": "100%",
+        },
+        "testID": "placeholder",
       }
     `);
   });

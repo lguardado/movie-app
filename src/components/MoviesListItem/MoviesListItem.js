@@ -31,7 +31,7 @@ const MoviesListItem = ({ uri, handleMoviePress, id }) => {
               </View>
             </View>
           ) : null}
-          <View style={styles.imagePlaceholder}>
+          <View style={styles.imagePlaceholder} testID="movie-placeholder">
             <Image source={noImage} resizeMode="center" />
           </View>
 

@@ -19,9 +19,7 @@ import {
   removeFavourite,
   fetchGenres,
   setLastFecthDate,
-  clearStore,
 } from 'actions/MoviesActions';
-import { globalReset } from 'actions/GlobalActions';
 
 const Details = ({ route }) => {
   const dispatch = useDispatch();
@@ -68,7 +66,7 @@ const Details = ({ route }) => {
 
   return (
     <ScrollView testID="detail-scroll-view">
-      <View style={styles.movieCardPlaceholder}>
+      <View style={styles.movieCardPlaceholder} testID="placeholder">
         <Image source={noImage} resizeMode="center" />
       </View>
       <FastImage

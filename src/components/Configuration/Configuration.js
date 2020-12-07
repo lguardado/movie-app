@@ -15,6 +15,9 @@ const Configuration = () => {
   const [showSave, setShowSave] = useState(false);
   const dispatch = useDispatch();
   const handleSave = () => {
+    if (!days) {
+      return;
+    }
     dispatch(setDataExpirationDays({ days }));
     setShowSave(true);
     setTimeout(() => {
@@ -32,12 +35,13 @@ const Configuration = () => {
         {strings.dataExpirationDescription}
       </Text>
       <Text style={[TextStyles.boldTitle, styles.text]}>
-        {strings.dataExpirationTitle}
-      </Text>
-      <Text style={[TextStyles.boldTitle, styles.text]}>
         {strings.currentExpirationDays} {dataExpirationDays}
       </Text>
+      <Text style={[TextStyles.boldTitle, styles.text, styles.noMarginBottom]}>
+        {strings.setDataExpirationDays}
+      </Text>
       <TextField
+        placeholder={strings.days}
         autoFocus
         onChangeText={handleChangeText}
         style={styles.input}

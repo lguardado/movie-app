@@ -2,7 +2,8 @@ export default {
   changesSaved: 'Changes Saved!',
   connectionError: 'Connection error',
   currentExpirationDays: 'Current expiration days: ',
-  dataExpirationTitle: 'Data expiration days',
+  setDataExpirationDays: 'Set expiration days quantity',
+  days: 'Days',
   dataExpirationDescription:
     'You can configure for how many days the data is considered valid. After that time it will be erased and re-downloaded from the server',
   email: 'Email',

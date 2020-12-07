@@ -9,13 +9,6 @@ const mockMovies = [
 ];
 
 const fakeStore = {
-  user: {
-    id: 1,
-    name: 'John',
-    email: 'john.doe@example.com',
-  },
-  error: {},
-  status: {},
   movies: {
     data: [
       { id: 1, poster_path: 'path' },

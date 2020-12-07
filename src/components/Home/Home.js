@@ -76,8 +76,6 @@ function Home({ navigation }) {
     } else {
       daysOld = getDays(new Date() - new Date(lastFetchDate));
     }
-    // todo: delete this comment before pushing
-    // console.log(`the store data is ${daysOld} days old`);
     if (daysOld > dataExpirationDays) {
       dispatch(clearStore());
       purge();

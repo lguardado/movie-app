@@ -7,8 +7,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    margin: 50,
-    marginHorizontal: 100,
+    marginHorizontal: 140,
     padding: 10,
     fontSize: 30,
     textAlign: 'center',
@@ -28,6 +27,9 @@ const styles = StyleSheet.create({
   text: {
     margin: 20,
     textAlign: 'center',
+  },
+  noMarginBottom: {
+    marginBottom: 0,
   },
 });
 
