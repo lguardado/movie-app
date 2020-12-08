@@ -90,12 +90,10 @@ describe('Details', () => {
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "lightgray",
-                  "flex": 1,
+                  "backgroundColor": undefined,
                   "height": 300,
                   "padding": 20,
                   "position": "absolute",
-                  "width": "100%",
                 }
               }
               testID="placeholder"
@@ -125,16 +123,12 @@ describe('Details', () => {
             />
             <View
               style={
-                Array [
-                  Object {
-                    "flex": 1,
-                    "padding": 20,
-                    "top": -100,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
+                Object {
+                  "color": undefined,
+                  "flex": 1,
+                  "padding": 20,
+                  "top": -100,
+                }
               }
             >
               <View
@@ -150,8 +144,8 @@ describe('Details', () => {
                   style={
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "white",
-                      "borderColor": "white",
+                      "backgroundColor": "rgb(0, 122, 255)",
+                      "borderColor": "rgb(0, 122, 255)",
                       "borderWidth": 0.5,
                       "flex": 1,
                       "height": 188,
@@ -185,7 +179,7 @@ describe('Details', () => {
                   }
                   style={
                     Object {
-                      "borderColor": "white",
+                      "borderColor": "rgb(0, 122, 255)",
                       "borderWidth": 0.5,
                       "flex": 1,
                       "height": 190,
@@ -194,14 +188,10 @@ describe('Details', () => {
                   }
                 />
                 <Text
-                  onPress={[Function]}
                   style={
                     Array [
                       Object {
-                        "color": "rgb(0, 122, 255)",
-                      },
-                      Object {
-                        "color": "coral",
+                        "color": "rgb(28, 28, 30)",
                         "flex": 2,
                         "flexWrap": "wrap",
                         "fontSize": 30,
@@ -254,12 +244,10 @@ describe('Details', () => {
         />,
         "style": Object {
           "alignItems": "center",
-          "backgroundColor": "lightgray",
-          "flex": 1,
+          "backgroundColor": undefined,
           "height": 300,
           "padding": 20,
           "position": "absolute",
-          "width": "100%",
         },
         "testID": "placeholder",
       }
