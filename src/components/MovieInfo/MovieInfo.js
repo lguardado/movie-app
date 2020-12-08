@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import Star from 'react-native-star-view';
+import { useTheme } from '@react-navigation/native';
 
 import { PropTypes } from 'prop-types';
 
-import styles from './styles';
+import getStyles from './styles';
 import strings from 'localization';
 import textStyles from 'helpers/TextStyles';
 import MyListButton from 'components/MyListButton';
@@ -17,6 +18,7 @@ const MovieInfo = ({
   isFavourite,
   handleFavouritePress,
 }) => {
+  const styles = getStyles(useTheme());
   const renderStar = useMemo(() => {
     return (
       <Star
@@ -35,14 +37,18 @@ const MovieInfo = ({
           />
         </View>
         <View style={styles.mainInfo}>
-          <Text style={[textStyles.alignCenter, textStyles.textMedium]}>
+          <Text
+            style={[textStyles.alignCenter, textStyles.textMedium, styles.text]}
+          >
             {genres.join(' ')}
           </Text>
-          <Text style={[textStyles.alignCenter, styles.fontSmall]}>
+          <Text style={[textStyles.alignCenter, styles.fontSmall, styles.text]}>
             {strings.releaseDate}: {releaseDate}
           </Text>
           <View style={styles.rate}>
-            <Text style={textStyles.textMedium}>{voteAverage.toFixed(1)}</Text>
+            <Text style={[textStyles.textMedium, styles.text]}>
+              {voteAverage.toFixed(1)}
+            </Text>
             <View testID="star-rate">{renderStar}</View>
           </View>
         </View>

@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useTheme } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
 import strings from 'localization';
 import noImage from 'assets/img_placeholder/not-found.png';
 import starIcon from 'assets/ic_star/ic_star.png';
-import styles from 'components/MoviesListItem/styles';
+import getStyles from 'components/MoviesListItem/styles';
 import { isFavourite } from 'selectors/MoviesSelectors';
 import textStyles from 'helpers/TextStyles';
 import Colors from 'constants/colors';
 
 const MoviesListItem = ({ uri, handleMoviePress, id }) => {
+  const styles = getStyles(useTheme());
   const isFav = useSelector(state => isFavourite(state, id));
   const [loadingImage, setLoadingImage] = useState(true);
 

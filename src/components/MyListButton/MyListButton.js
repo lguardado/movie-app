@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, Pressable } from 'react-native';
 import { PropTypes } from 'prop-types';
+import { useTheme } from '@react-navigation/native';
 import strings from 'localization';
 
 import textStyles from 'helpers/TextStyles';
-import styles from 'components/MyListButton/styles';
+import getStyles from 'components/MyListButton/styles';
 
 const MyListButton = ({ isFavourite, handleFavouritePress }) => {
+  const styles = getStyles(useTheme());
   return (
     <Pressable onPress={handleFavouritePress} testID="pressable">
       {!isFavourite ? (

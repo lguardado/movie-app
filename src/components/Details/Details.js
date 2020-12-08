@@ -5,7 +5,7 @@ import { ScrollView, Text, View, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useTheme } from '@react-navigation/native';
 
-import styles from './styles';
+import getStyles from './styles';
 import noImage from 'assets/img_placeholder/not-found.png';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
@@ -22,7 +22,7 @@ import {
 
 const Details = ({ route }) => {
   const dispatch = useDispatch();
-  const { colors } = useTheme();
+  const styles = getStyles(useTheme());
   const {
     movie: {
       id,
@@ -76,9 +76,7 @@ const Details = ({ route }) => {
         style={styles.movieCard}
         resizeMode={FastImage.resizeMode.cover}
       />
-      <View
-        style={[styles.container, { backgroundColor: colors.backgroundColor }]}
-      >
+      <View style={styles.container}>
         <View style={styles.detailHeader}>
           <View style={styles.thumbPlaceholder}>
             <Image
@@ -94,13 +92,7 @@ const Details = ({ route }) => {
             style={styles.posterThumb}
             resizeMode={FastImage.resizeMode.contain}
           />
-          <Text
-            style={[
-              { color: colors.primary },
-              styles.title,
-              textStyles.alignCenter,
-            ]}
-          >
+          <Text style={[styles.title, textStyles.alignCenter]}>
             {title} {title !== originalTitle ? `(${originalTitle})` : ''}
           </Text>
         </View>
