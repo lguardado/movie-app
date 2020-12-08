@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 188,
     borderColor: Colors.white,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     borderWidth: StyleSheet.hairlineWidth,
     flex: 1,
     position: 'absolute',
