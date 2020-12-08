@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
+import FastImage from 'react-native-fast-image';
 
 import strings from 'localization';
+import noImage from 'assets/img_placeholder/not-found.png';
 import starIcon from 'assets/ic_star/ic_star.png';
 import styles from 'components/MoviesListItem/styles';
 import { isFavourite } from 'selectors/MoviesSelectors';
@@ -29,14 +31,18 @@ const MoviesListItem = ({ uri, handleMoviePress, id }) => {
               </View>
             </View>
           ) : null}
-          <Image
+          <View style={styles.imagePlaceholder} testID="movie-placeholder">
+            <Image source={noImage} resizeMode="center" />
+          </View>
+
+          <FastImage
             testID="movie-image"
             onLoadEnd={() => setLoadingImage(false)}
             source={{
               uri,
             }}
             style={styles.item}
-            resizeMode="contain"
+            resizeMode={FastImage.resizeMode.contain}
           />
         </View>
       </Pressable>

@@ -6,10 +6,11 @@ import {
 import imageConstants from 'constants/images';
 
 export const actionTypes = {
+  ADD_FAVOURITE: 'ADD_FAVOURITE',
+  CLEAR_STORE: 'CLEAR_STORE',
   FETCH_MOVIES_REQUEST: 'FETCH_MOVIES_REQUEST',
   FETCH_MOVIES_SUCCESS: 'FETCH_MOVIES_SUCCESS',
   FETCH_MOVIES_ERROR: 'FETCH_MOVIES_ERROR',
-  CLEAR_STORE: 'CLEAR_STORE',
   FETCH_MOVIES: 'FETCH_MOVIES',
   FETCH_PREFIX_REQUEST: 'FETCH_PREFIX_REQUEST',
   FETCH_PREFIX_SUCCESS: 'FETCH_PREFIX_SUCCESS',
@@ -17,8 +18,9 @@ export const actionTypes = {
   FETCH_GENRES_REQUEST: 'FETCH_GENRES_REQUEST',
   FETCH_GENRES_SUCCESS: 'FETCH_GENRES_SUCCESS',
   FETCH_GENRESIG_ERROR: 'FETCH_GENRESIG_ERROR',
-  ADD_FAVOURITE: 'ADD_FAVOURITE',
   REMOVE_FAVOURITE: 'REMOVE_FAVOURITE',
+  SET_LAST_FETCH_DATE: 'SET_LAST_FETCH_DATE',
+  SET_DATA_EXPIRATION_DAYS: 'SET_DATA_EXPIRATION_DAYS',
 };
 
 const fetchMoviesRequest = () => ({
@@ -31,9 +33,14 @@ const fetchMoviesError = error => ({
   payload: { error },
 });
 
-const clearStore = () => ({
+export const clearStore = () => ({
   type: actionTypes.CLEAR_STORE,
   payload: null,
+});
+
+export const setDataExpirationDays = days => ({
+  type: actionTypes.SET_DATA_EXPIRATION_DAYS,
+  payload: days,
 });
 
 const fetchMoviesSuccess = movies => ({
@@ -49,6 +56,11 @@ export const addFavourite = id => ({
 export const removeFavourite = id => ({
   type: actionTypes.REMOVE_FAVOURITE,
   payload: { id },
+});
+
+export const setLastFecthDate = date => ({
+  type: actionTypes.SET_LAST_FETCH_DATE,
+  payload: { date },
 });
 
 export const fetchMovies = page => async dispatch => {

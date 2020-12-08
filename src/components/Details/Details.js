@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { ScrollView, Text, ImageBackground, View, Image } from 'react-native';
+import { ScrollView, Text, View, Image } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { useTheme } from '@react-navigation/native';
 
 import styles from './styles';
+import noImage from 'assets/img_placeholder/not-found.png';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
 import {
@@ -63,24 +65,34 @@ const Details = ({ route }) => {
 
   return (
     <ScrollView testID="detail-scroll-view">
-      <ImageBackground
+      <View style={styles.movieCardPlaceholder} testID="placeholder">
+        <Image source={noImage} resizeMode="center" />
+      </View>
+      <FastImage
         testID="image-background"
         source={{
           uri,
         }}
         style={styles.movieCard}
-        resizeMode="cover"
+        resizeMode={FastImage.resizeMode.cover}
       />
       <View
         style={[styles.container, { backgroundColor: colors.backgroundColor }]}
       >
         <View style={styles.detailHeader}>
-          <Image
+          <View style={styles.thumbPlaceholder}>
+            <Image
+              source={noImage}
+              resizeMode="stretch"
+              style={styles.thumbPlaceholderImage}
+            />
+          </View>
+          <FastImage
             source={{
               uri: thumbUri,
             }}
             style={styles.posterThumb}
-            resizeMode="contain"
+            resizeMode={FastImage.resizeMode.contain}
           />
           <Text
             style={[

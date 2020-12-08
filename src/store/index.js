@@ -18,3 +18,5 @@ export const store = createStore(
 export const persistor = callback => {
   return persistStore(store, null, callback);
 };
+
+export const purge = () => persistStore(store, null, null).purge();

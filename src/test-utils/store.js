@@ -11,6 +11,8 @@ const initialStore = {
     page: 1,
     prefixUrl: '',
     favourites: [],
+    lastFetchDate: null,
+    dataExpirationDays: 1,
   },
 };
 

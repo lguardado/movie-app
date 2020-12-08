@@ -7,7 +7,7 @@ import navigationConstants from 'constants/navigation';
 
 const tabIcon = {
   [navigationConstants.home]: homeIcon,
-  [navigationConstants.profile]: settingsIcon,
+  [navigationConstants.configuration]: settingsIcon,
 };
 
 function TabBarIcon({ name, color }) {

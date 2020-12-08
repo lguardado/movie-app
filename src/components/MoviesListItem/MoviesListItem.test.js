@@ -7,13 +7,6 @@ describe('MoviesListItem', () => {
   afterEach(cleanup);
 
   const fakeStore = {
-    user: {
-      id: 1,
-      name: 'John',
-      email: 'john.doe@example.com',
-    },
-    error: {},
-    status: {},
     movies: {
       data: [
         { id: 1, poster_path: 'path' },
@@ -29,26 +22,62 @@ describe('MoviesListItem', () => {
 
   test('renders the <MoviesListItem /> correctly with a passed uri', async () => {
     const uri = 'https://fakeUri.com';
-    const { findByTestId } = renderWithProviders(
+    const { findByTestId, getByTestId } = renderWithProviders(
       <MoviesListItem uri={uri} id={2} />,
       {
         initialState: fakeStore,
       }
     );
     const image = await findByTestId('movie-image');
+    const placeholder = getByTestId('movie-placeholder');
+    expect(placeholder.props).toMatchInlineSnapshot(`
+      Object {
+        "children": <Image
+          resizeMode="center"
+          source={
+            Object {
+              "testUri": "../../../src/assets/img_placeholder/not-found.png",
+            }
+          }
+        />,
+        "style": Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "transparent",
+          "borderBottomColor": "white",
+          "borderTopColor": "white",
+          "borderWidth": 0.5,
+          "flex": 1,
+          "height": 600,
+          "justifyContent": "center",
+          "padding": 20,
+          "position": "absolute",
+          "width": "96%",
+        },
+        "testID": "movie-placeholder",
+      }
+    `);
     expect(image.props).toMatchInlineSnapshot(`
       Object {
         "children": undefined,
-        "onLoadEnd": [Function],
+        "onFastImageError": undefined,
+        "onFastImageLoad": undefined,
+        "onFastImageLoadEnd": [Function],
+        "onFastImageLoadStart": undefined,
+        "onFastImageProgress": undefined,
         "resizeMode": "contain",
         "source": Object {
           "uri": "https://fakeUri.com",
         },
         "style": Object {
-          "height": 600,
-          "margin": 5,
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
         },
         "testID": "movie-image",
+        "tintColor": undefined,
       }
     `);
   });

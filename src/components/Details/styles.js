@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
   movieCard: {
     height: 300,
   },
+  movieCardPlaceholder: {
+    backgroundColor: Colors.lightGray,
+    alignItems: 'center',
+    padding: 20,
+    height: 300,
+    position: 'absolute',
+  },
   detailHeader: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -21,6 +28,21 @@ const styles = StyleSheet.create({
     borderColor: Colors.white,
     borderWidth: StyleSheet.hairlineWidth,
     flex: 1,
+  },
+  thumbPlaceholder: {
+    width: 125,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 188,
+    borderColor: Colors.white,
+    backgroundColor: Colors.white,
+    borderWidth: StyleSheet.hairlineWidth,
+    flex: 1,
+    position: 'absolute',
+  },
+  thumbPlaceholderImage: {
+    width: 100,
+    height: 100,
   },
   title: {
     fontSize: 30,

@@ -26,3 +26,11 @@ export function isFavourite(state, id) {
     ? state.movies.favourites.includes(id)
     : false;
 }
+
+export function getLastFetchDate(state) {
+  return state.movies.lastFetchDate;
+}
+
+export function getDataExpirationDays(state) {
+  return state.movies.dataExpirationDays;
+}

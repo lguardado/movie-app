@@ -6,14 +6,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import TabBarIcon from 'components/common/TabBarIcon';
 import Home from 'components/Home';
-import Profile from 'components/Profile';
 import navigationConstants from 'constants/navigation';
 import Details from 'components/Details';
 import Colors from 'constants/colors';
+import Configuration from 'components/Configuration';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const { home, profile, details } = navigationConstants;
+const { home, configuration, details } = navigationConstants;
 
 function HomeNavigator() {
   const androidHeaderStyle = {
@@ -57,10 +57,10 @@ function HomeNavigator() {
   );
 }
 
-function ProfileNavigator() {
+function ConfigurationNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={profile} component={Profile} />
+      <Stack.Screen name={configuration} component={Configuration} />
     </Stack.Navigator>
   );
 }
@@ -79,6 +79,7 @@ function AppNavigator() {
       }}
     >
       <Tab.Screen name={home} component={HomeNavigator} />
+      <Tab.Screen name={configuration} component={ConfigurationNavigator} />
     </Tab.Navigator>
   );
 }

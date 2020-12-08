@@ -6,6 +6,8 @@ const initialState = {
   prefixUrl: '',
   genres: [],
   favourites: [],
+  lastFetchDate: null,
+  dataExpirationDays: 1,
 };
 
 const addNewMovies = (prevMovies, moviesToAdd) => {
@@ -32,7 +34,13 @@ const moviesReducer = (state = initialState, { payload, type }) => {
     case actionTypes.FETCH_GENRES_SUCCESS:
       return { ...state, genres: payload.genres };
     case actionTypes.CLEAR_STORE:
-      return initialState;
+      // we want to keep the dataExpirationDays and favourites.
+      // the white list is not working if we clear the store manually.
+      return {
+        ...initialState,
+        dataExpirationDays: state.dataExpirationDays,
+        favourites: state.favourites,
+      };
     case actionTypes.ADD_FAVOURITE:
       return {
         ...state,
@@ -44,6 +52,16 @@ const moviesReducer = (state = initialState, { payload, type }) => {
       return {
         ...state,
         favourites: state.favourites.filter(id => id !== payload.id),
+      };
+    case actionTypes.SET_LAST_FETCH_DATE:
+      return {
+        ...state,
+        lastFetchDate: payload.date,
+      };
+    case actionTypes.SET_DATA_EXPIRATION_DAYS:
+      return {
+        ...state,
+        dataExpirationDays: payload.days,
       };
     default:
       return state;

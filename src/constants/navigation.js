@@ -1,8 +1,7 @@
 const navigationConstants = {
   home: 'Home',
-  login: 'Login',
-  profile: 'Profile',
   details: 'Details',
+  configuration: 'Configuration',
 };
 
 export default navigationConstants;
