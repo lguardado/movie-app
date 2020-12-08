@@ -13,9 +13,7 @@ const styles = StyleSheet.create({
   movieCardPlaceholder: {
     backgroundColor: Colors.lightGray,
     alignItems: 'center',
-    width: '100%',
     padding: 20,
-    flex: 1,
     height: 300,
     position: 'absolute',
   },
