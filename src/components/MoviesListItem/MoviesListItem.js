@@ -13,14 +13,14 @@ import { isFavourite } from 'selectors/MoviesSelectors';
 import textStyles from 'helpers/TextStyles';
 import Colors from 'constants/colors';
 
-const MoviesListItem = ({ uri, handleMoviePress, id }) => {
+const MoviesListItem = ({ uri, handleMoviePress, id, testID }) => {
   const styles = getStyles(useTheme());
   const isFav = useSelector(state => isFavourite(state, id));
   const [loadingImage, setLoadingImage] = useState(true);
 
   return (
     uri && (
-      <Pressable onPress={handleMoviePress}>
+      <Pressable onPress={handleMoviePress} testID={testID}>
         <View>
           {loadingImage && <ActivityIndicator />}
           {!loadingImage && isFav ? (
@@ -57,11 +57,13 @@ export default MoviesListItem;
 MoviesListItem.propTypes = {
   id: PropTypes.number,
   uri: PropTypes.string,
+  testID: PropTypes.string,
   handleMoviePress: PropTypes.func,
 };
 
 MoviesListItem.defaultProps = {
   id: null,
   uri: '',
+  testID: '',
   handleMoviePress: () => {},
 };
