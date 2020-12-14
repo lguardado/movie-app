@@ -70,7 +70,7 @@ MovieInfo.propTypes = {
   genres: PropTypes.array,
   isFavourite: PropTypes.bool,
   handleFavouritePress: PropTypes.func,
-  testID: PropTypes.string,
+  testID: PropTypes.string.isRequired,
 };
 
 MovieInfo.defaultProps = {
@@ -80,5 +80,4 @@ MovieInfo.defaultProps = {
   genres: [],
   isFavourite: false,
   handleFavouritePress: () => {},
-  testID: '',
 };

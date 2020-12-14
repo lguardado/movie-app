@@ -50,7 +50,7 @@ MoviesList.propTypes = {
   isFetchingMovies: PropTypes.bool,
   fetchMore: PropTypes.func,
   handleMoviePress: PropTypes.func,
-  testID: PropTypes.string,
+  testID: PropTypes.string.isRequired,
 };
 
 MoviesList.defaultProps = {
@@ -59,5 +59,4 @@ MoviesList.defaultProps = {
   isFetchingMovies: false,
   fetchMore: () => {},
   handleMoviePress: () => {},
-  testID: '',
 };

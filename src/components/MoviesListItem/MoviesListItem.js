@@ -57,13 +57,12 @@ export default MoviesListItem;
 MoviesListItem.propTypes = {
   id: PropTypes.number,
   uri: PropTypes.string,
-  testID: PropTypes.string,
+  testID: PropTypes.string.isRequired,
   handleMoviePress: PropTypes.func,
 };
 
 MoviesListItem.defaultProps = {
   id: null,
   uri: '',
-  testID: '',
   handleMoviePress: () => {},
 };
