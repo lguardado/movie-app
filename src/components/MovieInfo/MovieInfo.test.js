@@ -10,7 +10,7 @@ const fakeProps = {
 };
 
 const renderMovieInfo = props => {
-  return render(<MovieInfo {...props} />);
+  return render(<MovieInfo testID="info" {...props} />);
 };
 
 describe('<MovieInfo />', () => {

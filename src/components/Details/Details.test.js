@@ -89,7 +89,7 @@ describe('Details', () => {
             <View
               style={
                 Object {
-                  "alignItems": "center",
+                  "alignSelf": "center",
                   "backgroundColor": undefined,
                   "height": 300,
                   "padding": 20,
@@ -243,7 +243,7 @@ describe('Details', () => {
           }
         />,
         "style": Object {
-          "alignItems": "center",
+          "alignSelf": "center",
           "backgroundColor": undefined,
           "height": 300,
           "padding": 20,

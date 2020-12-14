@@ -10,10 +10,11 @@ import navigationConstants from 'constants/navigation';
 import Details from 'components/Details';
 import Colors from 'constants/colors';
 import Configuration from 'components/Configuration';
+import Search from 'components/Search';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const { home, configuration, details } = navigationConstants;
+const { home, configuration, details, search } = navigationConstants;
 
 function HomeNavigator() {
   const androidHeaderStyle = {
@@ -65,6 +66,15 @@ function ConfigurationNavigator() {
   );
 }
 
+function SearchNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={search} component={Search} />
+      <Stack.Screen name={details} component={Details} />
+    </Stack.Navigator>
+  );
+}
+
 function AppNavigator() {
   const { colors } = useTheme();
 
@@ -82,6 +92,7 @@ function AppNavigator() {
       }}
     >
       <Tab.Screen name={home} component={HomeNavigator} />
+      <Tab.Screen name={search} component={SearchNavigator} />
       <Tab.Screen name={configuration} component={ConfigurationNavigator} />
     </Tab.Navigator>
   );

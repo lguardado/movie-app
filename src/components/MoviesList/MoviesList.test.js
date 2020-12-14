@@ -24,7 +24,7 @@ const fakeStore = {
 afterEach(cleanup);
 
 const renderMoviesList = props => {
-  return renderWithProviders(<MoviesList {...props} />, {
+  return renderWithProviders(<MoviesList testID="list" {...props} />, {
     initialState: fakeStore,
   });
 };

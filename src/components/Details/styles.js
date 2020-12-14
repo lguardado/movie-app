@@ -13,7 +13,7 @@ const getStyles = ({ colors }) =>
     },
     movieCardPlaceholder: {
       backgroundColor: colors.backgroundColor,
-      alignItems: 'center',
+      alignSelf: 'center',
       padding: 20,
       height: 300,
       position: 'absolute',

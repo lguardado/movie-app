@@ -27,6 +27,32 @@ async function getPaginated(url, page = '') {
   }
 }
 
+async function getWithQuery(url, query = '') {
+  let tokenSource;
+  try {
+    if (typeof tokenSource !== typeof undefined) {
+      tokenSource.cancel('Operation canceled due to a new request');
+    }
+    tokenSource = axios.CancelToken.source();
+
+    const response = await axios.get(
+      `${url}?api_key=${API_KEY}&query=${query}`,
+      {
+        cancelToken: tokenSource.token,
+      }
+    );
+    if (response.data) {
+      return { cancelPrevQuery: false, result: response.data.results };
+    }
+    throw response;
+  } catch (err) {
+    if (axios.isCancel(err)) {
+      return { cancelPrevQuery: true };
+    }
+    return { error: err };
+  }
+}
+
 export const fetchMovies = async (page = 1) => {
   return getPaginated('/movie/popular', page).catch(err => {
     throw new Error(err.message);
@@ -41,6 +67,12 @@ export const fetchGenres = async () => {
 
 export const fetchConfiguration = async () => {
   return get('/configuration').catch(err => {
+    throw new Error(err.message);
+  });
+};
+
+export const searchMovie = async query => {
+  return getWithQuery('/search/movie', query).catch(err => {
     throw new Error(err.message);
   });
 };

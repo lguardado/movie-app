@@ -20,7 +20,9 @@ export default {
   profileMessage:
     'And this one has a nav, but with a different color than the login.',
   myList: '+ My List',
+  noMoviesFound: 'Sorry\nThere are no movies matching the entered criteria',
   removeFromMyList: '✓ Remove from my list',
   releaseDate: 'Release date',
   save: 'save changes',
+  searchPlaceholder: 'Search for a movie that you love...',
 };
