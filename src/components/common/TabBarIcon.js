@@ -10,13 +10,20 @@ const tabIcon = {
   [navigationConstants.configuration]: settingsIcon,
 };
 
-function TabBarIcon({ name, color }) {
-  return <Image source={tabIcon[name]} style={{ tintColor: color }} />;
+function TabBarIcon({ name, color, testID }) {
+  return (
+    <Image
+      source={tabIcon[name]}
+      style={{ tintColor: color }}
+      testID={testID}
+    />
+  );
 }
 
 TabBarIcon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
+  testID: PropTypes.string.isRequired,
 };
 
 export default TabBarIcon;

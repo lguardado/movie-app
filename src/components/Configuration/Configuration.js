@@ -32,7 +32,7 @@ const Configuration = () => {
     setDays(value);
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="configuration-view">
       <Pressable onPress={() => Keyboard.dismiss()}>
         <Text style={[TextStyles.textRegular, styles.text]}>
           {strings.dataExpirationDescription}
