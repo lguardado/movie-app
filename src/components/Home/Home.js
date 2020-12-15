@@ -149,6 +149,7 @@ function Home({ navigation }) {
           <Image source={logoIcon} style={styles.logoIcon} />
         </Center>
         <MoviesList
+          testID="movies-list"
           movies={movies}
           urlPrefix={prefixUrl}
           isFetchingMovies={isLoading}

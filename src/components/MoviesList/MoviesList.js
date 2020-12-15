@@ -10,6 +10,7 @@ const MoviesList = ({
   isFetchingMovies,
   fetchMore,
   handleMoviePress,
+  testID,
 }) => {
   const renderFooter = () => <ActivityIndicator size="large" />;
 
@@ -17,6 +18,7 @@ const MoviesList = ({
     const { id, poster_path: path } = item;
     return (
       <MoviesListItem
+        testID={testID}
         id={id}
         uri={urlPrefix + path}
         handleMoviePress={() => handleMoviePress(item)}
@@ -48,6 +50,7 @@ MoviesList.propTypes = {
   isFetchingMovies: PropTypes.bool,
   fetchMore: PropTypes.func,
   handleMoviePress: PropTypes.func,
+  testID: PropTypes.string.isRequired,
 };
 
 MoviesList.defaultProps = {

@@ -17,6 +17,7 @@ const MovieInfo = ({
   genres,
   isFavourite,
   handleFavouritePress,
+  testID,
 }) => {
   const styles = getStyles(useTheme());
   const renderStar = useMemo(() => {
@@ -26,10 +27,10 @@ const MovieInfo = ({
         score={(voteAverage * 5) / 10}
       />
     );
-  }, [voteAverage]);
+  }, [voteAverage, styles.rate]);
   return (
     <>
-      <View style={styles.infoContainer}>
+      <View style={styles.infoContainer} testID={testID}>
         <View style={styles.favourite}>
           <MyListButton
             handleFavouritePress={handleFavouritePress}
@@ -69,6 +70,7 @@ MovieInfo.propTypes = {
   genres: PropTypes.array,
   isFavourite: PropTypes.bool,
   handleFavouritePress: PropTypes.func,
+  testID: PropTypes.string.isRequired,
 };
 
 MovieInfo.defaultProps = {
