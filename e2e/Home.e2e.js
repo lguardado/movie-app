@@ -1,4 +1,4 @@
-describe.skip('Home screen', () => {
+describe('Home screen', () => {
   beforeEach(async () => {
     await device.reloadReactNative();
   });

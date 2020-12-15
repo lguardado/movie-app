@@ -70,4 +70,13 @@ describe('MoviesListItem', () => {
     expect(expirationText).not.toContain(fakeStore.movies.dataExpirationDays);
     expect(expirationText).toContain(newExpirationDays);
   });
+
+  test(`it doesn't show the success message when saving befor entering a value`, async () => {
+    const { getByText, queryByText } = renderWithProviders(<Configuration />, {
+      initialState: fakeStore,
+    });
+    const button = getByText(strings.save);
+    await fireEvent.press(button);
+    expect(queryByText(strings.changesSaved)).toBeNull();
+  });
 });
