@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import Colors from 'constants/colors';
-
 const getStyles = ({ colors }) =>
   StyleSheet.create({
     item: {
@@ -9,7 +7,7 @@ const getStyles = ({ colors }) =>
       margin: 5,
     },
     imagePlaceholder: {
-      backgroundColor: Colors.transparent,
+      backgroundColor: colors.primary,
       alignItems: 'center',
       justifyContent: 'center',
       alignSelf: 'center',
@@ -43,6 +41,12 @@ const getStyles = ({ colors }) =>
       width: 25,
       height: 25,
       marginLeft: 10,
+    },
+    placeholderTitle: {
+      position: 'absolute',
+      color: colors.text,
+      textAlign: 'center',
+      bottom: 200,
     },
   });
 

@@ -27,6 +27,20 @@ async function getPaginated(url, page = '') {
   }
 }
 
+async function getWithQuery(url, query = '') {
+  try {
+    const response = await axios.get(
+      `${url}?api_key=${API_KEY}&query=${query}`
+    );
+    if (response.data) {
+      return response.data.results;
+    }
+    throw response.data.results;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
 export const fetchMovies = async (page = 1) => {
   return getPaginated('/movie/popular', page).catch(err => {
     throw new Error(err.message);
@@ -41,6 +55,12 @@ export const fetchGenres = async () => {
 
 export const fetchConfiguration = async () => {
   return get('/configuration').catch(err => {
+    throw new Error(err.message);
+  });
+};
+
+export const searchMovie = async query => {
+  return getWithQuery('/search/movie', query).catch(err => {
     throw new Error(err.message);
   });
 };

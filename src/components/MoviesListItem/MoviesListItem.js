@@ -13,7 +13,7 @@ import { isFavourite } from 'selectors/MoviesSelectors';
 import textStyles from 'helpers/TextStyles';
 import Colors from 'constants/colors';
 
-const MoviesListItem = ({ uri, handleMoviePress, id, testID }) => {
+const MoviesListItem = ({ uri, handleMoviePress, id, title, testID }) => {
   const styles = getStyles(useTheme());
   const isFav = useSelector(state => isFavourite(state, id));
   const [loadingImage, setLoadingImage] = useState(true);
@@ -34,6 +34,7 @@ const MoviesListItem = ({ uri, handleMoviePress, id, testID }) => {
             </View>
           ) : null}
           <View style={styles.imagePlaceholder} testID="movie-placeholder">
+            <Text style={styles.placeholderTitle}>{title}</Text>
             <Image source={noImage} resizeMode="center" />
           </View>
 
@@ -58,11 +59,13 @@ MoviesListItem.propTypes = {
   id: PropTypes.number,
   uri: PropTypes.string,
   testID: PropTypes.string.isRequired,
+  title: PropTypes.string,
   handleMoviePress: PropTypes.func,
 };
 
 MoviesListItem.defaultProps = {
   id: null,
   uri: '',
+  title: '',
   handleMoviePress: () => {},
 };

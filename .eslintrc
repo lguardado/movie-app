@@ -21,22 +21,13 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [
-          "**/render.js",
-          "**/*.test.js"
-        ]
+        "devDependencies": ["**/render.js", "**/*.test.js"]
       }
     ],
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "parent",
-          "sibling",
-          "index"
-        ]
+        "groups": ["builtin", "external", "parent", "sibling", "index"]
       }
     ],
     "import/prefer-default-export": "off"
@@ -44,12 +35,7 @@
   "settings": {
     "import/resolver": {
       "babel-module": {
-        "extensions": [
-          ".android.js",
-          ".ios.js",
-          ".js",
-          ".native"
-        ]
+        "extensions": [".android.js", ".ios.js", ".js", ".native"]
       }
     }
   }

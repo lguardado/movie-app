@@ -74,6 +74,7 @@ describe('Home', () => {
                 },
               ]
             }
+            testID="movies-list"
             urlPrefix="http://foo.bar/w780"
           />,
         ],

@@ -13,7 +13,7 @@ import strings from 'localization';
 
 const Configuration = () => {
   const styles = getStyles(useTheme());
-  const [days, setDays] = useState(1);
+  const [days, setDays] = useState('');
   const [showSave, setShowSave] = useState(false);
   const dispatch = useDispatch();
   const handleSave = () => {

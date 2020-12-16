@@ -15,11 +15,12 @@ const MoviesList = ({
   const renderFooter = () => <ActivityIndicator size="large" />;
 
   const renderItem = ({ item }) => {
-    const { id, poster_path: path } = item;
+    const { id, poster_path: path, title } = item;
     return (
       <MoviesListItem
         testID={testID}
         id={id}
+        title={title}
         uri={urlPrefix + path}
         handleMoviePress={() => handleMoviePress(item)}
       />
