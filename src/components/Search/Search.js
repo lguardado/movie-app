@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import _ from 'lodash';
 import {
   View,
   Keyboard,
@@ -11,6 +10,7 @@ import {
 import { useTheme } from '@react-navigation/native';
 
 import getStyles from './styles';
+import useDebounce from 'components/common/hooks/useDebounce';
 import ErrorView from 'components/common/ErrorView';
 import SearchResults from 'components/SearchResults';
 import TextField from 'components/common/TextField';
@@ -21,46 +21,32 @@ import strings from 'localization';
 import { searchMovie } from 'controllers/MoviesClient';
 
 const Search = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [query, setQuery] = useState('');
   const styles = getStyles(useTheme());
-
-  const performQuery = async value => {
-    if (!value.length) {
-      setMovies([]);
-      setIsLoading(false);
-      return;
-    }
-    const res = await searchMovie(value);
-    const { cancelPrevQuery, result, error } = res;
-    if (cancelPrevQuery) return;
-
-    if (res && !error) {
-      setMovies(result);
-      setErrorMsg('');
-    } else {
-      setMovies([]);
-      setErrorMsg(error.message || strings.errorFetching);
-    }
-    setIsLoading(false);
-  };
 
   const handleChangeText = value => {
     setIsLoading(true);
-    setQuery(value);
-    const delay = value.length ? 500 : 0;
-    const search = _.debounce(async term => performQuery(term), delay);
-    setSearchQuery(prevSearch => {
-      if (prevSearch.cancel) {
-        prevSearch.cancel();
-      }
-      return search;
-    });
-    search(value);
+    setSearchTerm(value);
   };
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setIsLoading(true);
+      searchMovie(debouncedSearchTerm)
+        .then(results => {
+          setIsLoading(false);
+          setMovies(results);
+        })
+        .catch(err => setErrorMsg(err.message));
+    } else {
+      setIsLoading(false);
+      setMovies([]);
+    }
+  }, [debouncedSearchTerm]);
 
   return (
     <Pressable
@@ -85,7 +71,7 @@ const Search = ({ navigation }) => {
           <ActivityIndicator />
         </Center>
       )}
-      {query !== '' && !isLoading && (
+      {searchTerm !== '' && !isLoading && (
         <SearchResults
           navigation={navigation}
           movies={movies}

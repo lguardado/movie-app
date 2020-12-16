@@ -28,28 +28,16 @@ async function getPaginated(url, page = '') {
 }
 
 async function getWithQuery(url, query = '') {
-  let tokenSource;
   try {
-    if (typeof tokenSource !== typeof undefined) {
-      tokenSource.cancel('Operation canceled due to a new request');
-    }
-    tokenSource = axios.CancelToken.source();
-
     const response = await axios.get(
-      `${url}?api_key=${API_KEY}&query=${query}`,
-      {
-        cancelToken: tokenSource.token,
-      }
+      `${url}?api_key=${API_KEY}&query=${query}`
     );
     if (response.data) {
-      return { cancelPrevQuery: false, result: response.data.results };
+      return response.data.results;
     }
-    throw response;
+    throw response.data.results;
   } catch (err) {
-    if (axios.isCancel(err)) {
-      return { cancelPrevQuery: true };
-    }
-    return { error: err };
+    throw new Error(err.message);
   }
 }
 
