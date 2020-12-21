@@ -68,7 +68,7 @@ const Details = ({ route }) => {
       <View style={styles.movieCardPlaceholder} testID="placeholder">
         <Image source={noImage} resizeMode="center" />
       </View>
-      {uri !== '' && (
+      {uri && (
         <FastImage
           testID="image-background"
           source={{
@@ -87,7 +87,7 @@ const Details = ({ route }) => {
               style={styles.thumbPlaceholderImage}
             />
           </View>
-          {uri !== '' && (
+          {thumbUri && (
             <FastImage
               source={{
                 uri: thumbUri,

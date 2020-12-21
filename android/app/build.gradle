@@ -239,7 +239,6 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group: 'com.facebook.flipper'
     }
-    // androidTestImplementation(project(path: ":detox"))
     androidTestImplementation('com.wix:detox:+')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
