@@ -38,15 +38,17 @@ const MoviesListItem = ({ uri, handleMoviePress, id, title, testID }) => {
             <Image source={noImage} resizeMode="center" />
           </View>
 
-          <FastImage
-            testID="movie-image"
-            onLoadEnd={() => setLoadingImage(false)}
-            source={{
-              uri,
-            }}
-            style={styles.item}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {uri !== '' && (
+            <FastImage
+              testID="movie-image"
+              onLoadEnd={() => setLoadingImage(false)}
+              source={{
+                uri,
+              }}
+              style={styles.item}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
         </View>
       </Pressable>
     )

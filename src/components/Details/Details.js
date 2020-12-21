@@ -68,14 +68,16 @@ const Details = ({ route }) => {
       <View style={styles.movieCardPlaceholder} testID="placeholder">
         <Image source={noImage} resizeMode="center" />
       </View>
-      <FastImage
-        testID="image-background"
-        source={{
-          uri,
-        }}
-        style={styles.movieCard}
-        resizeMode={FastImage.resizeMode.cover}
-      />
+      {uri !== '' && (
+        <FastImage
+          testID="image-background"
+          source={{
+            uri,
+          }}
+          style={styles.movieCard}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      )}
       <View style={styles.container}>
         <View style={styles.detailHeader}>
           <View style={styles.thumbPlaceholder}>
@@ -85,13 +87,15 @@ const Details = ({ route }) => {
               style={styles.thumbPlaceholderImage}
             />
           </View>
-          <FastImage
-            source={{
-              uri: thumbUri,
-            }}
-            style={styles.posterThumb}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {uri !== '' && (
+            <FastImage
+              source={{
+                uri: thumbUri,
+              }}
+              style={styles.posterThumb}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
           <Text style={[styles.title, textStyles.alignCenter]}>
             {title} {title !== originalTitle ? `(${originalTitle})` : ''}
           </Text>

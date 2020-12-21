@@ -1,8 +1,6 @@
-describe('Home screen', () => {
-  beforeEach(async () => {
-    await device.reloadReactNative();
-  });
+const { by, expect, element } = require('detox');
 
+describe('Home screen', () => {
   it('should have an image for each movie', async () => {
     await expect(element(by.id('movie-image')).atIndex(0)).toBeVisible();
   });
