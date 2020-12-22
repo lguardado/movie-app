@@ -3,8 +3,10 @@ import { StyleSheet } from 'react-native';
 const getStyles = ({ colors }) =>
   StyleSheet.create({
     item: {
-      height: 600,
-      margin: 5,
+      height: 560,
+      padding: 0,
+      margin: 0,
+      top: 0,
     },
     imagePlaceholder: {
       backgroundColor: colors.primary,
@@ -12,9 +14,10 @@ const getStyles = ({ colors }) =>
       justifyContent: 'center',
       alignSelf: 'center',
       width: '96%',
-      height: 600,
-      padding: 20,
+      height: 560,
+      padding: 0,
       flex: 1,
+      top: 0,
       borderTopColor: colors.primary,
       borderBottomColor: colors.primary,
       borderWidth: StyleSheet.hairlineWidth,

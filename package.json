@@ -37,7 +37,8 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "detox": "^17.14.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -46,7 +47,7 @@
     "@testing-library/jest-native": "^3.4.3",
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/react-native": "^7.0.2",
-    "babel-jest": "^26.5.2",
+    "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "detox": "^17.14.3",
     "eslint": "^7.10.0",
@@ -60,7 +61,7 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-react-native-a11y": "^2.0.3",
     "eslint-plugin-testing-library": "^3.9.0",
-    "jest": "^26.5.2",
+    "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
     "jest-native": "^3.0.0",
     "jetifier": "^1.6.6",

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@react-navigation/native';
 import getStyles from './styles';
 import MoviesListItem from 'components/MoviesListItem';
-import moviesListStyles from 'components/MoviesList/styles';
 import { getPrefixUrl } from 'selectors/MoviesSelectors';
 import { fetchPrefix } from 'actions/MoviesActions';
 import navigationConstants from 'constants/navigation';
@@ -49,7 +48,6 @@ const SearchResults = ({ movies, isLoading, navigation }) => {
     <View>
       <FlatList
         testID="movies-search-results"
-        style={moviesListStyles.flatList}
         data={movies}
         keyExtractor={item => item.id.toString()}
         refreshing={isLoading}
