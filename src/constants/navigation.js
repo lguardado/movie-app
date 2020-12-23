@@ -3,6 +3,7 @@ const navigationConstants = {
   details: 'Details',
   configuration: 'Configuration',
   search: 'Search',
+  videoPlayer: 'Video Player',
 };
 
 export default navigationConstants;

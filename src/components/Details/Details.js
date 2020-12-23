@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { ScrollView, Text, View, Image } from 'react-native';
@@ -6,6 +6,9 @@ import FastImage from 'react-native-fast-image';
 import { useTheme } from '@react-navigation/native';
 
 import getStyles from './styles';
+import navigationConstants from 'constants/navigation';
+import videoConstants from 'constants/video';
+import Play from 'components/Play';
 import noImage from 'assets/img_placeholder/not-found.png';
 import MovieInfo from 'components/MovieInfo/MovieInfo';
 import textStyles from 'helpers/TextStyles';
@@ -19,8 +22,10 @@ import {
   removeFavourite,
   fetchGenres,
 } from 'actions/MoviesActions';
+import { fetchVideos } from 'controllers/MoviesClient';
 
-const Details = ({ route }) => {
+const Details = ({ route, navigation }) => {
+  const [videoUrl, setVideoUrl] = useState(false);
   const dispatch = useDispatch();
   const styles = getStyles(useTheme());
   const {
@@ -63,8 +68,34 @@ const Details = ({ route }) => {
     }
   };
 
+  useEffect(() => {
+    async function fetchVideoData() {
+      try {
+        const res = await fetchVideos(id);
+        if (res.results.length) {
+          const { key, site } = res.results[0];
+          const url =
+            site.toLowerCase() === 'youtube'
+              ? videoConstants.youtubePrefix + key
+              : videoConstants.vimeoPrefix + key;
+          setVideoUrl(url);
+        }
+      } catch (err) {
+        console.log('error', err);
+      }
+    }
+    fetchVideoData();
+  }, [id]);
+
+  const onPlayVideo = () => {
+    navigation.navigate(navigationConstants.videoPlayer, {
+      uri: videoUrl,
+    });
+  };
+
   return (
     <ScrollView testID="detail-scroll-view">
+      {videoUrl && <Play style={styles.videoControl} onPress={onPlayVideo} />}
       <View style={styles.movieCardPlaceholder} testID="placeholder">
         <Image source={noImage} resizeMode="center" />
       </View>
@@ -129,9 +160,11 @@ const MovieShape = PropTypes.shape(Movie);
 Details.propTypes = {
   route: PropTypes.object,
   movie: MovieShape,
+  navigation: PropTypes.object,
 };
 
 Details.defaultProps = {
   route: {},
   movie: {},
+  navigation: {},
 };
