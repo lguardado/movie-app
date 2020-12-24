@@ -5,7 +5,7 @@ import playIcon from 'assets/ic_play/ic_play.png';
 
 const Play = ({ onPress, style }) => {
   return (
-    <Pressable style={style} onPress={onPress}>
+    <Pressable style={style} onPress={onPress} testID="play-button">
       <Image source={playIcon} />
     </Pressable>
   );

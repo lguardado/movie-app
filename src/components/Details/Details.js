@@ -25,6 +25,7 @@ import {
 import { fetchVideos } from 'controllers/MoviesClient';
 
 const Details = ({ route, navigation }) => {
+  const [error, setError] = useState(null);
   const [videoUrl, setVideoUrl] = useState(false);
   const dispatch = useDispatch();
   const styles = getStyles(useTheme());
@@ -81,7 +82,7 @@ const Details = ({ route, navigation }) => {
           setVideoUrl(url);
         }
       } catch (err) {
-        console.log('error', err);
+        setError(err);
       }
     }
     fetchVideoData();
@@ -94,54 +95,57 @@ const Details = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView testID="detail-scroll-view">
-      {videoUrl && <Play style={styles.videoControl} onPress={onPlayVideo} />}
-      <View style={styles.movieCardPlaceholder} testID="placeholder">
-        <Image source={noImage} resizeMode="center" />
-      </View>
-      {uri && (
-        <FastImage
-          testID="image-background"
-          source={{
-            uri,
-          }}
-          style={styles.movieCard}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      )}
-      <View style={styles.container}>
-        <View style={styles.detailHeader}>
-          <View style={styles.thumbPlaceholder}>
-            <Image
-              source={noImage}
-              resizeMode="stretch"
-              style={styles.thumbPlaceholderImage}
-            />
-          </View>
-          {thumbUri && (
-            <FastImage
-              source={{
-                uri: thumbUri,
-              }}
-              style={styles.posterThumb}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          )}
-          <Text style={[styles.title, textStyles.alignCenter]}>
-            {title} {title !== originalTitle ? `(${originalTitle})` : ''}
-          </Text>
+    <>
+      {error && <View>{`error fetching url: ${error}`}</View>}
+      <ScrollView testID="detail-scroll-view">
+        {videoUrl && <Play style={styles.videoControl} onPress={onPlayVideo} />}
+        <View style={styles.movieCardPlaceholder} testID="placeholder">
+          <Image source={noImage} resizeMode="center" />
         </View>
-        <MovieInfo
-          testID="movie-info"
-          releaseDate={releaseDate}
-          voteAverage={voteAverage}
-          overview={overview}
-          genres={genresNames}
-          isFavourite={isFav}
-          handleFavouritePress={onToggleMovie}
-        />
-      </View>
-    </ScrollView>
+        {uri && (
+          <FastImage
+            testID="image-background"
+            source={{
+              uri,
+            }}
+            style={styles.movieCard}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        )}
+        <View style={styles.container}>
+          <View style={styles.detailHeader}>
+            <View style={styles.thumbPlaceholder}>
+              <Image
+                source={noImage}
+                resizeMode="stretch"
+                style={styles.thumbPlaceholderImage}
+              />
+            </View>
+            {thumbUri && (
+              <FastImage
+                source={{
+                  uri: thumbUri,
+                }}
+                style={styles.posterThumb}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )}
+            <Text style={[styles.title, textStyles.alignCenter]}>
+              {title} {title !== originalTitle ? `(${originalTitle})` : ''}
+            </Text>
+          </View>
+          <MovieInfo
+            testID="movie-info"
+            releaseDate={releaseDate}
+            voteAverage={voteAverage}
+            overview={overview}
+            genres={genresNames}
+            isFavourite={isFav}
+            handleFavouritePress={onToggleMovie}
+          />
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

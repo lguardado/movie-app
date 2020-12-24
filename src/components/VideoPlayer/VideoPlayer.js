@@ -22,7 +22,12 @@ const VideoPlayer = ({ route }) => {
         </Center>
       )}
       <View style={styles.webView}>
-        <WebView on onLoadEnd={onLoadFinished} source={{ uri }} />
+        <WebView
+          on
+          onLoadEnd={onLoadFinished}
+          source={{ uri }}
+          testID="webView"
+        />
       </View>
     </>
   );
