@@ -23,6 +23,7 @@
     "@types/react-native": "^0.63.37",
     "axios": "^0.20.0",
     "detox": "^17.14.3",
+    "axios": "^0.21.1",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.3",
