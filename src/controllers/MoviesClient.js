@@ -59,6 +59,12 @@ export const fetchConfiguration = async () => {
   });
 };
 
+export const fetchVideos = async movieId => {
+  return get(`/movie/${movieId}/videos`).catch(err => {
+    throw new Error(err.message);
+  });
+};
+
 export const searchMovie = async query => {
   return getWithQuery('/search/movie', query).catch(err => {
     throw new Error(err.message);

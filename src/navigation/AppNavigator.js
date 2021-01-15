@@ -10,11 +10,18 @@ import navigationConstants from 'constants/navigation';
 import Details from 'components/Details';
 import Colors from 'constants/colors';
 import Configuration from 'components/Configuration';
+import VimeoVideo from 'components/VideoPlayer';
 import Search from 'components/Search';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const { home, configuration, details, search } = navigationConstants;
+const {
+  home,
+  configuration,
+  details,
+  search,
+  videoPlayer,
+} = navigationConstants;
 
 function HomeNavigator() {
   const androidHeaderStyle = {
@@ -54,6 +61,7 @@ function HomeNavigator() {
         component={Details}
         options={headerOptions}
       />
+      <Stack.Screen name={videoPlayer} component={VimeoVideo} />
     </Stack.Navigator>
   );
 }
@@ -71,6 +79,7 @@ function SearchNavigator() {
     <Stack.Navigator>
       <Stack.Screen name={search} component={Search} />
       <Stack.Screen name={details} component={Details} />
+      <Stack.Screen name={videoPlayer} component={VimeoVideo} />
     </Stack.Navigator>
   );
 }

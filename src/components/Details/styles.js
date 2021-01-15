@@ -53,6 +53,12 @@ const getStyles = ({ colors }) =>
       flexWrap: 'wrap',
       color: colors.text,
     },
+    videoControl: {
+      position: 'absolute',
+      top: '16%',
+      alignSelf: 'center',
+      zIndex: 1,
+    },
   });
 
 export default getStyles;

@@ -1,7 +1,10 @@
 import React from 'react';
-import { cleanup } from '@testing-library/react-native';
+import { cleanup, waitFor } from '@testing-library/react-native';
 import Details from 'components/Details';
 import { renderWithProviders } from 'test-utils/render';
+import { fetchVideos } from 'controllers/MoviesClient';
+
+jest.mock('controllers/MoviesClient');
 
 const fakeRoute = {
   params: {
@@ -252,5 +255,38 @@ describe('Details', () => {
         "testID": "placeholder",
       }
     `);
+  });
+
+  test('shows a <Play /> button only when there is a video url', async () => {
+    fetchVideos.mockReturnValueOnce(
+      Promise.resolve({
+        id: 634244,
+        results: [
+          {
+            key: '4ULOlo8gvF8',
+            site: 'YouTube',
+          },
+        ],
+      })
+    );
+    const { queryByTestId } = renderDetails({ route: fakeRoute });
+
+    await waitFor(() => {
+      expect(queryByTestId('play-button').props).toBeDefined();
+    });
+  });
+
+  test("it doesn't show a <Play /> button only when there is NO video url found", async () => {
+    fetchVideos.mockReturnValueOnce(
+      Promise.resolve({
+        id: 634244,
+        results: [],
+      })
+    );
+    const { queryByTestId } = renderDetails({ route: fakeRoute });
+
+    await waitFor(() => {
+      expect(queryByTestId('play-button')).toBeNull();
+    });
   });
 });

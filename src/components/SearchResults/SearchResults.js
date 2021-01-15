@@ -45,7 +45,7 @@ const SearchResults = ({ movies, isLoading, navigation }) => {
     );
   };
   return movies && movies.length ? (
-    <View>
+    <View style={{ paddingBottom: 50 }}>
       <FlatList
         testID="movies-search-results"
         data={movies}
