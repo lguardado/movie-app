@@ -30,7 +30,7 @@
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-localization": "^2.1.6",
-    "react-native-reanimated": "^1.13.1",
+    "react-native-reanimated": "^2.10.0",
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.16.1",
     "react-native-star-view": "^1.1.3",
